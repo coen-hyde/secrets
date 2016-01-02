@@ -1,0 +1,11 @@
+{
+	"ImportPath": "github.com/coen-hyde/secrets",
+	"GoVersion": "go1.5",
+	"Deps": [
+		{
+			"ImportPath": "github.com/codegangsta/cli",
+			"Comment": "1.2.0-187-gc31a797",
+			"Rev": "c31a7975863e7810c92e2e288a9ab074f9a88f29"
+		}
+	]
+}
