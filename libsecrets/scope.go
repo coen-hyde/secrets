@@ -1,17 +1,17 @@
 package libsecrets
 
 import (
+	"encoding/json"
 	"errors"
-	"fmt"
+	"io/ioutil"
 	"os"
 )
 
 // Scope encapsulates a logical set of secrets
 type Scope struct {
-	Name     string
-	Location string
-	Members  []Member
-	Data     map[string]interface{}
+	Name    string
+	Members []Member
+	Data    map[string]interface{}
 }
 
 // Member is a keybase user
@@ -21,15 +21,15 @@ type Member struct {
 
 // NewScope instanciates a scope struct
 func NewScope(name string) (scope *Scope, err error) {
-	location := makeScopePath(name)
 	scope = &Scope{
-		Name:     name,
-		Location: location,
+		Name:    name,
+		Members: make([]Member, 0),
+		Data:    make(map[string]interface{}),
 	}
 
 	// Load existing data if it exists
-	if fileExists(makeScopePath(name)) {
-		err = scope.load()
+	if scope.exists() {
+		err = scope.Load()
 	}
 
 	return
@@ -47,7 +47,7 @@ func CreateScope(name string) (scope *Scope, err error) {
 	}
 
 	// TODO: Add current keybase user as Member
-	err = scope.save()
+	err = scope.Save()
 
 	return
 }
@@ -67,20 +67,45 @@ func fileExists(path string) bool {
 		return false
 	}
 
-	fmt.Println(err)
-	os.Exit(1)
 	return false
 }
 
-func (s *Scope) load() error {
-	if !fileExists(s.Location) {
-		return errors.New("Can not load scope " + s.Name + " from location " + s.Location + ". No such file")
-	}
-
-	return nil
+// Path returns the file path of the secret file
+func (s *Scope) Path() string {
+	return makeScopePath(s.Name)
 }
 
-func (s *Scope) save() error {
-	// errors.New("Can not save scope " + scope.Name + " at location " + scope.Location)
-	return nil
+func (s *Scope) exists() bool {
+	return fileExists(s.Path())
+}
+
+// Load reads the secret scope from disk
+func (s *Scope) Load() error {
+	if !s.exists() {
+		return errors.New("Can not load scope " + s.Name + " from location " + s.Path() + ". No such file")
+	}
+
+	// Read secrets from disk
+	data, err := ioutil.ReadFile(s.Path())
+	if err != nil {
+		return err
+	}
+
+	// Import the data
+	return json.Unmarshal(data, &s)
+}
+
+// Save writes the secret scope to disk
+func (s *Scope) Save() error {
+	data, err := s.ToJSON()
+	if err != nil {
+		return err
+	}
+
+	return ioutil.WriteFile(s.Path(), data, 0644)
+}
+
+// ToJSON converts this scope to json
+func (s *Scope) ToJSON() ([]byte, error) {
+	return json.Marshal(s)
 }

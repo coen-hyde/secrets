@@ -22,13 +22,6 @@ func main() {
 				commands.Init(c)
 			},
 		},
-		{
-			Name:  "get",
-			Usage: "Get a value",
-			Action: func(c *cli.Context) {
-				println("added task: ", c.Args().First())
-			},
-		},
 	}
 
 	app.Run(os.Args)
