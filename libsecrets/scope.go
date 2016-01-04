@@ -11,7 +11,7 @@ import (
 type Scope struct {
 	Name    string
 	Members []Member
-	Data    map[string]interface{}
+	Data    map[string]string
 }
 
 // Member is a keybase user
@@ -24,7 +24,7 @@ func NewScope(name string) (scope *Scope, err error) {
 	scope = &Scope{
 		Name:    name,
 		Members: make([]Member, 0),
-		Data:    make(map[string]interface{}),
+		Data:    make(map[string]string),
 	}
 
 	// Load existing data if it exists
@@ -70,13 +70,23 @@ func fileExists(path string) bool {
 	return false
 }
 
+func (s *Scope) exists() bool {
+	return fileExists(s.Path())
+}
+
+// Get returns a secret from
+func (s *Scope) Get(key string) string {
+	return s.Data[key]
+}
+
+// Set returns a secret from
+func (s *Scope) Set(key string, value string) {
+	s.Data[key] = value
+}
+
 // Path returns the file path of the secret file
 func (s *Scope) Path() string {
 	return makeScopePath(s.Name)
-}
-
-func (s *Scope) exists() bool {
-	return fileExists(s.Path())
 }
 
 // Load reads the secret scope from disk
