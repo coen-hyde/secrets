@@ -28,7 +28,5 @@ func Init(c *cli.Context) {
 		os.Exit(1)
 	}
 
-	fmt.Println(scope)
-
 	fmt.Println("Initialized empty secrets repository at", libsecrets.Dir())
 }

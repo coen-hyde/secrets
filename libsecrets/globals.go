@@ -5,9 +5,12 @@ import (
 	"os"
 	"sync"
 
+	"golang.org/x/net/context"
+
 	"github.com/keybase/client/go/client"
 	"github.com/keybase/client/go/libkb"
 	"github.com/keybase/client/go/logger"
+	"github.com/keybase/client/go/protocol"
 )
 
 var libkbGlobals = libkb.G
@@ -40,33 +43,33 @@ func initLibkb() {
 }
 
 // CurrentUser Get the current Keybase User
-// func CurrentUser() (keybase1.User, error) {
-// 	configCli, err := client.GetConfigClient(libkb.G)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-//
-// 	currentStatus, err := configCli.GetCurrentStatus(context.TODO(), 0)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	if !currentStatus.LoggedIn {
-// 		return nil, fmt.Errorf("Not logged in.")
-// 	}
-// 	myUID := currentStatus.User.Uid
-//
-// 	userCli, err := client.GetUserClient()
-// 	if err != nil {
-// 		return nil, err
-// 	}
-//
-// 	me, err := userCli.LoadUser(context.TODO(), keybase1.LoadUserArg{Uid: myUID})
-// 	if err != nil {
-// 		return nil, err
-// 	}
-//
-// 	return me, nil
-// }
+func CurrentUser() (*keybase1.User, error) {
+	configCli, err := client.GetConfigClient(libkb.G)
+	if err != nil {
+		return nil, err
+	}
+
+	currentStatus, err := configCli.GetCurrentStatus(context.TODO(), 0)
+	if err != nil {
+		return nil, err
+	}
+	if !currentStatus.LoggedIn {
+		return nil, fmt.Errorf("Not logged in.")
+	}
+	myUID := currentStatus.User.Uid
+
+	userCli, err := client.GetUserClient()
+	if err != nil {
+		return nil, err
+	}
+
+	me, err := userCli.LoadUser(context.TODO(), keybase1.LoadUserArg{Uid: myUID})
+	if err != nil {
+		return nil, err
+	}
+
+	return &me, nil
+}
 
 // Dir returns the directory where the secrets should be stored
 func Dir() string {

@@ -33,20 +33,27 @@ func NewScope(name string) (scope *Scope, err error) {
 }
 
 // CreateScope creates a new scope
-func CreateScope(name string) (scope *Scope, err error) {
+func CreateScope(name string) (*Scope, error) {
 	if fileExists(makeScopePath(name)) {
 		return nil, fmt.Errorf("Can not create scope %s. Scope already exists", name)
 	}
 
-	scope, err = NewScope(name)
+	scope, err := NewScope(name)
 	if err != nil {
-		return
+		return nil, err
 	}
 
 	// TODO: Add current keybase user as Member
+	me, err := CurrentUser()
+	if err != nil {
+		return nil, err
+	}
+
+	scope.Members = append(scope.Members, *me)
+
 	err = scope.Save()
 
-	return
+	return scope, err
 }
 
 // MakeScopeLocation constructs the path of a scope
