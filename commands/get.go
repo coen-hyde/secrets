@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	cli "github.com/coen-hyde/secrets/Godeps/_workspace/src/github.com/codegangsta/cli"
+	cli "github.com/codegangsta/cli"
 	"github.com/coen-hyde/secrets/libsecrets"
 )
 

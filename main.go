@@ -3,13 +3,13 @@ package main
 import (
 	"os"
 
-	cli "github.com/coen-hyde/secrets/Godeps/_workspace/src/github.com/codegangsta/cli"
+	cli "github.com/codegangsta/cli"
 	"github.com/coen-hyde/secrets/commands"
+	"github.com/coen-hyde/secrets/libsecrets"
 )
 
 func main() {
-	// g := libkb.G
-	// g.Init()
+	libsecrets.Init()
 
 	app := cli.NewApp()
 	app.Name = "Secrets"

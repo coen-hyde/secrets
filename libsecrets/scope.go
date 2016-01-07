@@ -2,28 +2,25 @@ package libsecrets
 
 import (
 	"encoding/json"
-	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
+
+	keybase1 "github.com/keybase/client/go/protocol"
 )
 
 // Scope encapsulates a logical set of secrets
 type Scope struct {
 	Name    string
-	Members []Member
+	Members []keybase1.User
 	Data    map[string]string
-}
-
-// Member is a keybase user
-type Member struct {
-	username string
 }
 
 // NewScope instanciates a scope struct
 func NewScope(name string) (scope *Scope, err error) {
 	scope = &Scope{
 		Name:    name,
-		Members: make([]Member, 0),
+		Members: make([]keybase1.User, 0),
 		Data:    make(map[string]string),
 	}
 
@@ -38,7 +35,7 @@ func NewScope(name string) (scope *Scope, err error) {
 // CreateScope creates a new scope
 func CreateScope(name string) (scope *Scope, err error) {
 	if fileExists(makeScopePath(name)) {
-		return nil, errors.New("Can not create scope " + name + ". Scope already exists")
+		return nil, fmt.Errorf("Can not create scope %s. Scope already exists", name)
 	}
 
 	scope, err = NewScope(name)
@@ -92,7 +89,7 @@ func (s *Scope) Path() string {
 // Load reads the secret scope from disk
 func (s *Scope) Load() error {
 	if !s.exists() {
-		return errors.New("Can not load scope " + s.Name + " from location " + s.Path() + ". No such file")
+		return fmt.Errorf("Can not load scope %s from location %s. No such file", s.Name, s.Path())
 	}
 
 	// Read secrets from disk
