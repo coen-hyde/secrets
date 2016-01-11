@@ -5,14 +5,12 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-
-	keybase1 "github.com/keybase/client/go/protocol"
 )
 
 // Scope encapsulates a logical set of secrets
 type Scope struct {
 	Name    string
-	Members []keybase1.User
+	Members []Member
 	Data    map[string]string
 }
 
@@ -20,7 +18,7 @@ type Scope struct {
 func NewScope(name string) (scope *Scope, err error) {
 	scope = &Scope{
 		Name:    name,
-		Members: make([]keybase1.User, 0),
+		Members: make([]Member, 0),
 		Data:    make(map[string]string),
 	}
 
@@ -43,13 +41,9 @@ func CreateScope(name string) (*Scope, error) {
 		return nil, err
 	}
 
-	// TODO: Add current keybase user as Member
-	me, err := CurrentUser()
-	if err != nil {
-		return nil, err
-	}
-
-	scope.Members = append(scope.Members, *me)
+	// Add the creator of this scope as a member
+	member := NewMemberFromKeybaseUser(G.KeybaseUser)
+	scope.AddMember(member, member)
 
 	err = scope.Save()
 
@@ -107,6 +101,12 @@ func (s *Scope) Load() error {
 
 	// Import the data
 	return json.Unmarshal(data, &s)
+}
+
+// AddMember adds a member to this scope
+func (s *Scope) AddMember(m *Member, adder *Member) {
+	m.AddedBy = adder.Uid
+	s.Members = append(s.Members, *m)
 }
 
 // Save writes the secret scope to disk

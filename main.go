@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	libsecrets.Init()
+	libsecrets.G.Init()
 
 	app := cli.NewApp()
 	app.Name = "Secrets"

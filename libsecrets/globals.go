@@ -13,25 +13,50 @@ import (
 	"github.com/keybase/client/go/protocol"
 )
 
-var libkbGlobals = libkb.G
 var libkbOnce sync.Once
 
+// GlobalContext stores the application global context
+type GlobalContext struct {
+	Log         logger.Logger
+	KeybaseUser *keybase1.User
+}
+
+// NewGlobalContext initializes a new global context
+func NewGlobalContext() *GlobalContext {
+	return &GlobalContext{}
+}
+
+// G is the current global context
+var G *GlobalContext
+
+func init() {
+	G = NewGlobalContext()
+}
+
 // Init Initializes the secrets app
-func Init() {
+func (g *GlobalContext) Init() {
 	// Force Production Mode for the moment
 	os.Setenv("KEYBASE_RUN_MODE", "prod")
 
-	initLibkb()
-	log := logger.NewWithCallDepth("", 1, os.Stderr)
+	g.initLibkb()
+	g.Log = logger.NewWithCallDepth("", 1, os.Stderr)
+
+	me, err := CurrentUser()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	g.KeybaseUser = me
 
 	client.InitUI()
 	if err := client.GlobUI.Configure(); err != nil {
-		log.Warning("problem configuring UI: %s", err)
-		log.Warning("ignoring for now...")
+		g.Log.Warning("problem configuring UI: %s", err)
+		g.Log.Warning("ignoring for now...")
 	}
 }
 
-func initLibkb() {
+func (g *GlobalContext) initLibkb() {
 	libkbOnce.Do(func() {
 		libkb.G.Init()
 		libkb.G.ConfigureConfig()
@@ -53,8 +78,11 @@ func CurrentUser() (*keybase1.User, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	// If the user isnt logged in then there is nothing we can do, exit
 	if !currentStatus.LoggedIn {
-		return nil, fmt.Errorf("Not logged in.")
+		G.Log.Error("Please login to Keybase before using Secrets. You can do this by issuing the command `keybase login`")
+		os.Exit(1)
 	}
 	myUID := currentStatus.User.Uid
 

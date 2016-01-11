@@ -8,10 +8,12 @@ import (
 	"github.com/coen-hyde/secrets/libsecrets"
 )
 
+var g = libsecrets.G
+
 // Init initializes a secrets repository in the current directory
 func Init(c *cli.Context) {
 	if libsecrets.DirExists() {
-		fmt.Println("Secrets repository has already been initialized")
+		g.Log.Warning("Secrets repository has already been initialized")
 		os.Exit(0)
 	}
 
@@ -22,11 +24,11 @@ func Init(c *cli.Context) {
 	}
 
 	// TODO: Create initial scopes
-	scope, err := libsecrets.CreateScope("default")
+	_, err := libsecrets.CreateScope("default")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	fmt.Println("Initialized empty secrets repository at", libsecrets.Dir())
+	g.Log.Info("Initialized empty secrets repository at", libsecrets.Dir())
 }
