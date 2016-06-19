@@ -1,0 +1,174 @@
+hash: 089e2daece5aaae797ad27372a6b6636359c3411405cd4507c10c1cecc2e9956
+updated: 2016-06-19T09:22:52.226144786-07:00
+imports:
+- name: bazil.org/fuse
+  version: 0dfaa72ce1313ab5a43f1cb501fd87e2f367283f
+- name: code.google.com/p/rsc
+  version: e1cb635eaa1bed9efc1ec21c8537c46161abfcb8
+  repo: git@github.com:rsc/rsc.git
+  vcs: git
+  subpackages:
+  - qr
+  - qr/coding
+  - gf256
+- name: github.com/agl/ed25519
+  version: 278e1ec8e8a6e017cd07577924d6766039146ced
+  subpackages:
+  - edwards25519
+- name: github.com/andybalholm/cascadia
+  version: 3ad29d1ad1c4f2023e355603324348cf1f4b2d48
+- name: github.com/blang/semver
+  version: e64c75d1c910cd81c8caa1f2cc2c6409dd65af81
+- name: github.com/cenkalti/backoff
+  version: cdf48bbc1eb78d1349cbda326a4a037f7ba565c6
+- name: github.com/codegangsta/cli
+  version: b438abf775124d32be72016935a9553dbffe8473
+- name: github.com/dustin/go-humanize
+  version: 499693e27ee0d14ffab67c31ad065fdb3d34ea75
+- name: github.com/golang/groupcache
+  version: 02826c3e79038b59d737d3b1c0a1d937f71a4433
+  subpackages:
+  - singleflight
+- name: github.com/golang/snappy
+  version: d9eb7a3d35ec988b8585d4a0068e462c27d28380
+- name: github.com/hashicorp/golang-lru
+  version: a0d98a5f288019575c6d1f4bb1573fef2d1fcdc4
+  subpackages:
+  - simplelru
+- name: github.com/jonboulle/clockwork
+  version: 2eee05ed794112d45db504eb05aa693efd2b8b09
+- name: github.com/kardianos/osext
+  version: 29ae4ffbc9a6fe9fb2bc5029050ce6996ea1d3bc
+- name: github.com/keybase/cli
+  version: 18b3e3986cf707f059fd443667525dbc664a5716
+- name: github.com/keybase/client
+  version: 183de871e9c492d51c410b4de698b37be7ab6359
+  subpackages:
+  - go/client
+  - go/libkb
+  - go/logger
+  - go/protocol
+  - go/auth
+  - go/engine
+  - go/install
+  - go/launchd
+  - go/libcmdline
+  - go/minterm
+  - go/pinentry
+  - go/qrcode
+  - go/service
+  - go/spotty
+  - go/kex2
+  - go/lsof
+  - go/mounter
+- name: github.com/keybase/go-codec
+  version: cc2681ec6f901149e58af9d40a90da1aa370aadb
+  subpackages:
+  - codec
+- name: github.com/keybase/go-crypto
+  version: 513c7f62eea5c5d22fc665eb5665f5bf554af9ff
+  subpackages:
+  - openpgp
+  - openpgp/armor
+  - openpgp/clearsign
+  - openpgp/errors
+  - openpgp/packet
+  - openpgp/s2k
+  - rsa
+  - ssh/terminal
+  - brainpool
+  - cast5
+  - openpgp/elgamal
+- name: github.com/keybase/go-framed-msgpack-rpc
+  version: 090895b12240aa18b8d6a759a2638f0c1065c7d0
+- name: github.com/keybase/go-jsonw
+  version: 49900b186f7c75688c880fec4a1c0f20d9209e2a
+- name: github.com/keybase/go-kext
+  version: 812245fc176f35fbb18f9344ad0a9f363bd95435
+- name: github.com/keybase/go-keychain
+  version: 18e96b8b8ccf5706fbba9d97a82cbb009720bf02
+- name: github.com/keybase/go-logging
+  version: f3c7c3c1605e29ebcce430bb1e0d048faf4081ce
+- name: github.com/keybase/go-ps
+  version: f5e5fd36a1028a67d0aa92f2700b284f881a656c
+- name: github.com/keybase/go-triplesec
+  version: b360b8252869a5ac88df3ed7897bc3b6d1e55dd2
+  subpackages:
+  - sha3
+- name: github.com/keybase/go-updater
+  version: 6dbcde939aaedf510df002e019992d53f9c93257
+  subpackages:
+  - watchdog
+  - sources
+  - process
+  - util
+- name: github.com/keybase/gregor
+  version: 962dc4fba8953fb6e922b3e0c7e21dcf9ca0214a
+  subpackages:
+  - protocol/gregor1
+  - rpc/client
+  - storage
+  - schema
+- name: github.com/keybase/npipe
+  version: 0938d701e50e580f5925c773055eb6d6b32a0cbc
+- name: github.com/keybase/saltpack
+  version: bde25349b648d471c05bfc77062eba282e887e98
+  subpackages:
+  - encoding/basex
+- name: github.com/kr/text
+  version: 7cafcd837844e784b526369c9bce262804aebc60
+- name: github.com/mattn/go-isatty
+  version: 56b76bdf51f7708750eac80fa38b952bb9f32639
+- name: github.com/PuerkitoBio/goquery
+  version: 77cbaef46a3af185a3afb87f88a366f3dee2a904
+- name: github.com/rogpeppe/rog-go
+  version: f57ad5e24ab7813942c045f86eda1066eb969e98
+  subpackages:
+  - reverse
+- name: github.com/syndtr/goleveldb
+  version: fa5b5c78794bc5c18f330361059f871ae8c2b9d6
+  subpackages:
+  - leveldb
+  - leveldb/errors
+  - leveldb/cache
+  - leveldb/comparer
+  - leveldb/filter
+  - leveldb/iterator
+  - leveldb/journal
+  - leveldb/memdb
+  - leveldb/opt
+  - leveldb/storage
+  - leveldb/table
+  - leveldb/util
+- name: golang.org/x/crypto
+  version: f3241ce8505855877cc8a9717bd61a0f7c4ea83c
+  subpackages:
+  - nacl/box
+  - nacl/secretbox
+  - scrypt
+  - ssh/terminal
+  - salsa20
+  - twofish
+  - poly1305
+  - curve25519
+  - salsa20/salsa
+  - pbkdf2
+- name: golang.org/x/net
+  version: 1961d9def2b2d7a28d7958926d2457d05a178ecd
+  subpackages:
+  - context
+  - html
+  - html/atom
+- name: golang.org/x/sys
+  version: 62bee037599929a6e9146f29d10dd5208c43507d
+  subpackages:
+  - windows
+  - windows/registry
+  - unix
+- name: h12.me/socks
+  version: fa8c79229fbda5e9996dd91341b9fc023aa5d33a
+- name: stathat.com/c/ramcache
+  version: d229745ea466bc903d6cdf310aa57bfffb45653b
+  repo: git@github.com:stathat/ramcache.git
+  vcs: git
+devImports: []

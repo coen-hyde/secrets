@@ -1,0 +1,18 @@
+package: github.com/coen-hyde/secrets
+import:
+- package: stathat.com/c/ramcache
+  vcs: git
+  repo: git@github.com:stathat/ramcache.git
+- package: code.google.com/p/rsc
+  vcs: git
+  repo: git@github.com:rsc/rsc.git
+- package: github.com/codegangsta/cli
+- package: github.com/keybase/client
+  subpackages:
+  - go/client
+  - go/libkb
+  - go/logger
+  - go/protocol
+- package: golang.org/x/net
+  subpackages:
+  - context
