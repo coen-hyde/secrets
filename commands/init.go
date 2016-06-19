@@ -30,5 +30,5 @@ func Init(c *cli.Context) {
 		os.Exit(1)
 	}
 
-	g.Log.Info("Initialized empty secrets repository at", libsecrets.Dir())
+	g.Log.Info("Initialized empty secrets repository at %s", libsecrets.Dir())
 }

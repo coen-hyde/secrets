@@ -39,7 +39,7 @@ func (g *GlobalContext) Init() {
 	os.Setenv("KEYBASE_RUN_MODE", "prod")
 
 	g.initLibkb()
-	g.Log = logger.NewWithCallDepth("", 1, os.Stderr)
+	g.Log = logger.NewWithCallDepth("", 1)
 
 	me, err := CurrentUser()
 	if err != nil {
@@ -86,7 +86,7 @@ func CurrentUser() (*keybase1.User, error) {
 	}
 	myUID := currentStatus.User.Uid
 
-	userCli, err := client.GetUserClient()
+	userCli, err := client.GetUserClient(libkb.G)
 	if err != nil {
 		return nil, err
 	}

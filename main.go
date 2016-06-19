@@ -18,22 +18,25 @@ func main() {
 		{
 			Name:  "init",
 			Usage: "Initialize a Secrets respository in the current directory",
-			Action: func(c *cli.Context) {
+			Action: func(c *cli.Context) error {
 				commands.Init(c)
+				return nil
 			},
 		},
 		{
 			Name:  "get",
 			Usage: "Get a value",
-			Action: func(c *cli.Context) {
+			Action: func(c *cli.Context) error {
 				commands.Get(c)
+				return nil
 			},
 		},
 		{
 			Name:  "set",
 			Usage: "Set a value",
-			Action: func(c *cli.Context) {
+			Action: func(c *cli.Context) error {
 				commands.Set(c)
+				return nil
 			},
 		},
 	}
