@@ -36,10 +36,11 @@ func init() {
 // Init Initializes the secrets app
 func (g *GlobalContext) Init() {
 	// Force Production Mode for the moment
+	os.Setenv("KEYBASE_DEBUG", "1")
 	os.Setenv("KEYBASE_RUN_MODE", "prod")
 
 	g.initLibkb()
-	g.Log = logger.NewWithCallDepth("", 1)
+	g.Log = logger.NewWithCallDepth("secrets", 1)
 
 	me, err := CurrentUser()
 	if err != nil {
