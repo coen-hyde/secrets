@@ -17,7 +17,7 @@ func MembersList(c *cli.Context) {
 	}
 
 	for _, member := range scope.Members {
-		fmt.Println(member)
+		fmt.Println(member.Username)
 	}
 }
 

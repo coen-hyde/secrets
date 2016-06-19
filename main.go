@@ -39,6 +39,24 @@ func main() {
 				return nil
 			},
 		},
+		{
+			Name:  "members",
+			Usage: "List members",
+			Action: func(c *cli.Context) error {
+				commands.MembersList(c)
+				return nil
+			},
+			Subcommands: []cli.Command{
+				{
+					Name:  "add",
+					Usage: "Add a new member",
+					Action: func(c *cli.Context) error {
+						commands.MembersAdd(c)
+						return nil
+					},
+				},
+			},
+		},
 	}
 
 	app.Run(os.Args)
