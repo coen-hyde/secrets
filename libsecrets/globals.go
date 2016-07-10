@@ -40,7 +40,7 @@ func (g *GlobalContext) Init() {
 	os.Setenv("KEYBASE_RUN_MODE", "prod")
 
 	g.initLibkb()
-	g.Log = logger.NewWithCallDepth("secrets", 1)
+	g.Log = g.intLogger()
 
 	me, err := CurrentUser()
 	if err != nil {
@@ -64,8 +64,19 @@ func (g *GlobalContext) initLibkb() {
 		libkb.G.ConfigureLogging()
 		libkb.G.ConfigureCaches()
 		libkb.G.ConfigureMerkleClient()
+		libkb.G.ConfigureKeyring()
+		libkb.G.ConfigureExportedStreams()
 		libkb.G.ConfigureSocketInfo()
 	})
+}
+
+func (g *GlobalContext) intLogger() logger.Logger {
+	log := logger.NewWithCallDepth("secrets", 1)
+
+	// log.Configure("fancy", true, "")
+	log.Info("Secrets")
+
+	return log
 }
 
 // CurrentUser Get the current Keybase User
