@@ -1,8 +1,8 @@
 hash: 089e2daece5aaae797ad27372a6b6636359c3411405cd4507c10c1cecc2e9956
-updated: 2016-06-19T09:22:52.226144786-07:00
+updated: 2016-07-04T11:35:11.149271266-07:00
 imports:
 - name: bazil.org/fuse
-  version: 0dfaa72ce1313ab5a43f1cb501fd87e2f367283f
+  version: 13c08bbe192a46acda0b82b4fb5aa851d5210736
 - name: code.google.com/p/rsc
   version: e1cb635eaa1bed9efc1ec21c8537c46161abfcb8
   repo: git@github.com:rsc/rsc.git
@@ -18,13 +18,13 @@ imports:
 - name: github.com/andybalholm/cascadia
   version: 3ad29d1ad1c4f2023e355603324348cf1f4b2d48
 - name: github.com/blang/semver
-  version: e64c75d1c910cd81c8caa1f2cc2c6409dd65af81
+  version: 60ec3488bfea7cca02b021d106d9911120d25fe9
 - name: github.com/cenkalti/backoff
   version: cdf48bbc1eb78d1349cbda326a4a037f7ba565c6
 - name: github.com/codegangsta/cli
-  version: b438abf775124d32be72016935a9553dbffe8473
+  version: 1efa31f08b9333f1bd4882d61f9d668a70cd902e
 - name: github.com/dustin/go-humanize
-  version: 499693e27ee0d14ffab67c31ad065fdb3d34ea75
+  version: fef948f2d241bd1fd0631108ecc2c9553bae60bf
 - name: github.com/golang/groupcache
   version: 02826c3e79038b59d737d3b1c0a1d937f71a4433
   subpackages:
@@ -40,14 +40,15 @@ imports:
 - name: github.com/kardianos/osext
   version: 29ae4ffbc9a6fe9fb2bc5029050ce6996ea1d3bc
 - name: github.com/keybase/cli
-  version: 18b3e3986cf707f059fd443667525dbc664a5716
+  version: a13fd3546410f473e9e479b9db1413bb679fdce9
 - name: github.com/keybase/client
-  version: 183de871e9c492d51c410b4de698b37be7ab6359
+  version: e698e097883c57566508d331e1f9577e6c32e9b4
   subpackages:
   - go/client
   - go/libkb
   - go/logger
   - go/protocol
+  - go/vendor/github.com/keybase/go-framed-msgpack-rpc
   - go/auth
   - go/engine
   - go/install
@@ -90,20 +91,18 @@ imports:
 - name: github.com/keybase/go-logging
   version: f3c7c3c1605e29ebcce430bb1e0d048faf4081ce
 - name: github.com/keybase/go-ps
-  version: f5e5fd36a1028a67d0aa92f2700b284f881a656c
+  version: eae146130275a0543f214777bbfa8f8f9b34ca53
 - name: github.com/keybase/go-triplesec
   version: b360b8252869a5ac88df3ed7897bc3b6d1e55dd2
   subpackages:
   - sha3
 - name: github.com/keybase/go-updater
-  version: 6dbcde939aaedf510df002e019992d53f9c93257
+  version: a05bfa6382513c15afde21392f07617f4ad68de9
   subpackages:
   - watchdog
-  - sources
   - process
-  - util
 - name: github.com/keybase/gregor
-  version: 962dc4fba8953fb6e922b3e0c7e21dcf9ca0214a
+  version: 581542236cbb7dde1d4c21dd3073011b3e8e23ff
   subpackages:
   - protocol/gregor1
   - rpc/client
@@ -120,13 +119,13 @@ imports:
 - name: github.com/mattn/go-isatty
   version: 56b76bdf51f7708750eac80fa38b952bb9f32639
 - name: github.com/PuerkitoBio/goquery
-  version: 77cbaef46a3af185a3afb87f88a366f3dee2a904
+  version: f0d75731e0db647903c8611d00c7b85002751317
 - name: github.com/rogpeppe/rog-go
   version: f57ad5e24ab7813942c045f86eda1066eb969e98
   subpackages:
   - reverse
 - name: github.com/syndtr/goleveldb
-  version: fa5b5c78794bc5c18f330361059f871ae8c2b9d6
+  version: ab8b5dcf1042e818ab68e770d465112a899b668e
   subpackages:
   - leveldb
   - leveldb/errors
@@ -141,7 +140,7 @@ imports:
   - leveldb/table
   - leveldb/util
 - name: golang.org/x/crypto
-  version: f3241ce8505855877cc8a9717bd61a0f7c4ea83c
+  version: 0c565bf13221fb55497d7ae2bb95694db1fd1bff
   subpackages:
   - nacl/box
   - nacl/secretbox
@@ -154,17 +153,27 @@ imports:
   - salsa20/salsa
   - pbkdf2
 - name: golang.org/x/net
-  version: 1961d9def2b2d7a28d7958926d2457d05a178ecd
+  version: b400c2eff1badec7022a8c8f5bea058b6315eed7
   subpackages:
   - context
   - html
   - html/atom
 - name: golang.org/x/sys
-  version: 62bee037599929a6e9146f29d10dd5208c43507d
+  version: a408501be4d17ee978c04a618e7a1b22af058c0e
   subpackages:
   - windows
   - windows/registry
   - unix
+- name: golang.org/x/text
+  version: ce78b075c2fbd48520f4995b173eb9fe18b56ef3
+  subpackages:
+  - encoding/unicode
+  - transform
+  - encoding
+  - encoding/internal
+  - encoding/internal/identifier
+  - internal/utf8internal
+  - runes
 - name: h12.me/socks
   version: fa8c79229fbda5e9996dd91341b9fc023aa5d33a
 - name: stathat.com/c/ramcache
