@@ -6,12 +6,12 @@ import (
 	"io/ioutil"
 	"os"
 
-	"golang.org/x/net/context"
+	// "golang.org/x/net/context"
 
 	"github.com/keybase/client/go/client"
-	"github.com/keybase/client/go/libkb"
-	keybase1 "github.com/keybase/client/go/protocol"
-	rpc "github.com/keybase/go-framed-msgpack-rpc"
+	// "github.com/keybase/client/go/libkb"
+	// keybase1 "github.com/keybase/client/go/protocol"
+	// rpc "github.com/keybase/go-framed-msgpack-rpc"
 )
 
 // Scope encapsulates a logical set of secrets
@@ -132,42 +132,10 @@ func (s *Scope) Save() error {
 		return err
 	}
 
-	cli, err := client.GetSaltpackClient(libkb.G)
-	if err != nil {
-		return err
-	}
+	src := NewBufferSource(&data)
+	sink := client.NewFileSink(s.Path() + ".enc")
 
-	protocols := []rpc.Protocol{
-		client.NewStreamUIProtocol(libkb.G),
-		client.NewSecretUIProtocol(libkb.G),
-		client.NewIdentifyUIProtocol(libkb.G),
-	}
-	if err = client.RegisterProtocolsWithContext(protocols, libkb.G); err != nil {
-		return err
-	}
-
-	filter := &client.UnixFilter{}
-
-	if err = filter.FilterInit(string(data), "", s.Path()+".enc"); err != nil {
-		return err
-	}
-
-	snk, src, err := filter.ClientFilterOpen()
-	if err != nil {
-		return err
-	}
-
-	opts := keybase1.SaltpackEncryptOptions{
-		Recipients:     s.GetMemberUsernames(),
-		NoSelfEncrypt:  false,
-		Binary:         false,
-		HideRecipients: false,
-	}
-
-	arg := keybase1.SaltpackEncryptArg{Source: src, Sink: snk, Opts: opts}
-	err = cli.SaltpackEncrypt(context.TODO(), arg)
-	ferr := filter.Close(err)
-	return libkb.PickFirstError(err, ferr)
+	return Encrypt(src, sink, s.GetMemberUsernames())
 }
 
 // ToJSON converts this scope to json
