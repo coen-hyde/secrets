@@ -2,11 +2,17 @@ package libsecrets
 
 import (
 	"bytes"
+	// "fmt"
 )
+
+// NewBufferSink returns a new NewBufferSink
+func NewBufferSink() *BufferSink {
+	return &BufferSink{}
+}
 
 // BufferSink is used to capture Keybase decrypted data
 type BufferSink struct {
-	buf  *bytes.Buffer
+	buf  bytes.Buffer
 	open bool
 }
 
@@ -33,4 +39,9 @@ func (s *BufferSink) HitError(e error) error { return nil }
 // String returns the buffer as a string
 func (s *BufferSink) String() string {
 	return s.buf.String()
+}
+
+// Bytes returns the bytes in the buffer
+func (s *BufferSink) Bytes() []byte {
+	return s.buf.Bytes()
 }

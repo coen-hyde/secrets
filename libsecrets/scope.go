@@ -3,15 +3,9 @@ package libsecrets
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 
-	// "golang.org/x/net/context"
-
 	"github.com/keybase/client/go/client"
-	// "github.com/keybase/client/go/libkb"
-	// keybase1 "github.com/keybase/client/go/protocol"
-	// rpc "github.com/keybase/go-framed-msgpack-rpc"
 )
 
 // Scope encapsulates a logical set of secrets
@@ -100,14 +94,16 @@ func (s *Scope) Load() error {
 		return fmt.Errorf("Can not load scope %s from location %s. No such file", s.Name, s.Path())
 	}
 
-	// Read secrets from disk
-	data, err := ioutil.ReadFile(s.Path())
+	src := client.NewFileSource(s.Path())
+	sink := NewBufferSink()
+
+	err := Decrypt(src, sink, true, false)
+
 	if err != nil {
 		return err
 	}
 
-	// Import the data
-	return json.Unmarshal(data, &s)
+	return json.Unmarshal(sink.Bytes(), &s)
 }
 
 // AddMember adds a member to this scope
@@ -133,7 +129,7 @@ func (s *Scope) Save() error {
 	}
 
 	src := NewBufferSource(&data)
-	sink := client.NewFileSink(s.Path() + ".enc")
+	sink := client.NewFileSink(s.Path())
 
 	return Encrypt(src, sink, s.GetMemberUsernames())
 }
