@@ -15,7 +15,7 @@ type Scope struct {
 	Data    map[string]string
 }
 
-// NewScope instanciates a scope struct
+// NewScope instantiate a scope struct
 func NewScope(name string) (scope *Scope, err error) {
 	scope = &Scope{
 		Name:    name,
@@ -132,6 +132,22 @@ func (s *Scope) Save() error {
 	sink := client.NewFileSink(s.Path())
 
 	return Encrypt(src, sink, s.GetMemberUsernames())
+}
+
+// Export returns this scopes data in the request format
+func (s *Scope) Export(format string) (string, error) {
+	var formatter Formatter
+
+	switch format {
+	case "json":
+		formatter = NewFormatterJSON(&s.Data)
+	case "human":
+		formatter = NewFormatterHuman(&s.Data)
+	default:
+		return "", fmt.Errorf("Unknown export format %s", format)
+	}
+
+	return formatter.String(), nil
 }
 
 // ToJSON converts this scope to json

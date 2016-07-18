@@ -5,7 +5,7 @@ import (
 	// "fmt"
 )
 
-// NewBufferSink returns a new NewBufferSink
+// NewBufferSink returns a new BufferSink
 func NewBufferSink() *BufferSink {
 	return &BufferSink{}
 }

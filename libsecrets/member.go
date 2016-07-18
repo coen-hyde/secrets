@@ -14,7 +14,7 @@ type Member struct {
 	DateAdded time.Time
 }
 
-// NewMember instanciates a scope struct
+// NewMember instantiate a scope struct
 func NewMember(username string, uid keybase1.UID) *Member {
 	return &Member{
 		Username:  username,

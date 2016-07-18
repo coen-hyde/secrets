@@ -40,13 +40,32 @@ func main() {
 			},
 		},
 		{
-			Name:  "members",
-			Usage: "List members",
+			Name:  "export",
+			Usage: "Export all data in a scope",
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "format",
+					Value: "human",
+					Usage: "Format to output the data in",
+				},
+			},
 			Action: func(c *cli.Context) error {
-				commands.MembersList(c)
+				commands.Export(c)
 				return nil
 			},
+		},
+		{
+			Name:  "members",
+			Usage: "Member management",
 			Subcommands: []cli.Command{
+				{
+					Name:  "list",
+					Usage: "List members in a scope",
+					Action: func(c *cli.Context) error {
+						commands.MembersList(c)
+						return nil
+					},
+				},
 				{
 					Name:  "add",
 					Usage: "Add a new member",

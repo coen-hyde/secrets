@@ -8,13 +8,7 @@ import (
 	"github.com/coen-hyde/secrets/libsecrets"
 )
 
-func printAll(s *libsecrets.Scope) {
-	for key, value := range s.Data {
-		fmt.Println(key + ": " + value)
-	}
-}
-
-// Get gets all or a specific value from the secrets
+// Get gets a value by key from a scope
 func Get(c *cli.Context) {
 	scope, err := libsecrets.NewScope("default")
 	if err != nil {
@@ -22,11 +16,11 @@ func Get(c *cli.Context) {
 		os.Exit(1)
 	}
 
-	switch len(c.Args()) {
-	case 0:
-		printAll(scope)
-	case 1:
-		key := c.Args().First()
-		fmt.Println(scope.Get(key))
+	if len(c.Args()) != 1 {
+		libsecrets.G.Log.Error("The get command requires exactly one argument")
+		os.Exit(1)
 	}
+
+	key := c.Args().First()
+	fmt.Println(scope.Get(key))
 }
