@@ -30,7 +30,7 @@ func MembersList(c *cli.Context) {
 
 // MembersAdd add a new member to the scope
 func MembersAdd(c *cli.Context) {
-	_, err := libsecrets.NewScope("default")
+	scope, err := libsecrets.NewScope("default")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -42,21 +42,25 @@ func MembersAdd(c *cli.Context) {
 		os.Exit(1)
 	}
 
-	user, err := userCli.LoadUserByName(context.TODO(), keybase1.LoadUserByNameArg{Username: "codesoda"})
+	loadUserArgs := keybase1.LoadUserByNameArg{
+		Username: c.Args().First(),
+	}
+
+	user, err := userCli.LoadUserByName(context.TODO(), loadUserArgs)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	fmt.Println(user)
-	os.Exit(1)
-	// err = scope.AddMember(c.Args().First())
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	os.Exit(1)
-	// }
-	//
-	// fmt.Println(err)
+	member := libsecrets.NewMemberFromKeybaseUser(&user)
+	adder := libsecrets.NewMemberFromKeybaseUser(libsecrets.G.KeybaseUser)
+	scope.AddMember(member, adder)
+
+	err = scope.Save()
+	if err != nil {
+		g.Log.Error(err.Error())
+		os.Exit(1)
+	}
 }
 
 // MembersRemove add a new member to the scope
