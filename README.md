@@ -27,18 +27,19 @@ Usage
 ### Get a variable
 `$ secret get key`
 
-### export all variables in a human friendly format
+### Export all variables in a human friendly format
 `$ secrets export`
 
-### export all variables in JSON format
+### Export all variables in JSON format
 `$ secrets export -f json`
 
-### list all members
+### List all members
 `$ secrets members`
 
-### add member
-All members added to a Secrets scope require a Keybase device key.
+### Add member
 `$ secrets members add $keybase_name`
+
+All members added to a Secrets scope require a Keybase device key.
 
 The Future
 ----------
