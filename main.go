@@ -44,7 +44,7 @@ func main() {
 			Usage: "Export all data in a scope",
 			Flags: []cli.Flag{
 				cli.StringFlag{
-					Name:  "format",
+					Name:  "format, f",
 					Value: "human",
 					Usage: "Format to output the data in",
 				},
