@@ -17,7 +17,7 @@ func (f *FormatterHuman) String() string {
 	output := ""
 
 	for key, value := range *f.data {
-		output += key + ": " + value
+		output += key + ": " + value + "\n"
 	}
 
 	return string(output)
