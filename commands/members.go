@@ -8,11 +8,10 @@ import (
 
 	cli "github.com/codegangsta/cli"
 
+	"github.com/coen-hyde/secrets/libsecrets"
 	"github.com/keybase/client/go/client"
 	"github.com/keybase/client/go/libkb"
-	"github.com/keybase/client/go/protocol"
-
-	"github.com/coen-hyde/secrets/libsecrets"
+	"github.com/keybase/client/go/protocol/keybase1"
 )
 
 // MembersList gets all or a specific value from the secrets

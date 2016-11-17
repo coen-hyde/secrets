@@ -8,8 +8,8 @@ import (
 
 	"github.com/keybase/client/go/client"
 	"github.com/keybase/client/go/libkb"
-	keybase1 "github.com/keybase/client/go/protocol"
-	rpc "github.com/keybase/go-framed-msgpack-rpc"
+	"github.com/keybase/client/go/protocol/keybase1"
+	"github.com/keybase/go-framed-msgpack-rpc/rpc"
 )
 
 // Decrypt decrypts data from the source stream to the sink stream

@@ -1,136 +1,147 @@
-hash: 089e2daece5aaae797ad27372a6b6636359c3411405cd4507c10c1cecc2e9956
-updated: 2016-07-04T11:35:11.149271266-07:00
+hash: afd32de6a58eef85a999753df9e8852987b869c3807ace6df5bab19e1aeec0dd
+updated: 2016-11-17T00:23:19.6322737-08:00
 imports:
 - name: bazil.org/fuse
-  version: 13c08bbe192a46acda0b82b4fb5aa851d5210736
+  version: 371fbbdaa8987b715bdd21d6adc4c9b20155f748
 - name: code.google.com/p/rsc
   version: e1cb635eaa1bed9efc1ec21c8537c46161abfcb8
   repo: git@github.com:rsc/rsc.git
   vcs: git
   subpackages:
+  - gf256
   - qr
   - qr/coding
-  - gf256
 - name: github.com/agl/ed25519
   version: 278e1ec8e8a6e017cd07577924d6766039146ced
   subpackages:
   - edwards25519
 - name: github.com/andybalholm/cascadia
-  version: 3ad29d1ad1c4f2023e355603324348cf1f4b2d48
+  version: 65919c611220063037b1db8eb334acaf17a6d8ea
 - name: github.com/blang/semver
   version: 60ec3488bfea7cca02b021d106d9911120d25fe9
 - name: github.com/cenkalti/backoff
-  version: cdf48bbc1eb78d1349cbda326a4a037f7ba565c6
+  version: b02f2bbce11d7ea6b97f282ef1771b0fe2f65ef3
 - name: github.com/codegangsta/cli
-  version: 1efa31f08b9333f1bd4882d61f9d668a70cd902e
+  version: b4f4786f378c0c1d3336b5bb798094b166edf5a9
 - name: github.com/dustin/go-humanize
-  version: fef948f2d241bd1fd0631108ecc2c9553bae60bf
+  version: bd88f87ad3a420f7bcf05e90566fd1ceb351fa7f
 - name: github.com/golang/groupcache
-  version: 02826c3e79038b59d737d3b1c0a1d937f71a4433
+  version: a6b377e3400b08991b80d6805d627f347f983866
   subpackages:
   - singleflight
 - name: github.com/golang/snappy
   version: d9eb7a3d35ec988b8585d4a0068e462c27d28380
 - name: github.com/hashicorp/golang-lru
-  version: a0d98a5f288019575c6d1f4bb1573fef2d1fcdc4
+  version: 0a025b7e63adc15a622f29b0b2c4c3848243bbf6
   subpackages:
   - simplelru
 - name: github.com/jonboulle/clockwork
-  version: 2eee05ed794112d45db504eb05aa693efd2b8b09
+  version: bcac9884e7502bb2b474c0339d889cb981a2f27f
 - name: github.com/kardianos/osext
-  version: 29ae4ffbc9a6fe9fb2bc5029050ce6996ea1d3bc
+  version: c2c54e542fb797ad986b31721e1baedf214ca413
 - name: github.com/keybase/cli
   version: a13fd3546410f473e9e479b9db1413bb679fdce9
 - name: github.com/keybase/client
-  version: e698e097883c57566508d331e1f9577e6c32e9b4
+  version: 164f4a483d1607f8ac9f305cdf185645d1f739ab
   subpackages:
-  - go/client
-  - go/libkb
-  - go/logger
-  - go/protocol
-  - go/vendor/github.com/keybase/go-framed-msgpack-rpc
   - go/auth
+  - go/chat
+  - go/chat/pager
+  - go/chat/s3
+  - go/chat/signencrypt
+  - go/chat/storage
+  - go/chat/utils
+  - go/client
   - go/engine
+  - go/externals
+  - go/flexibletable
+  - go/gregor
+  - go/gregor/client
+  - go/gregor/storage
   - go/install
+  - go/kex2
   - go/launchd
   - go/libcmdline
+  - go/libkb
+  - go/logger
+  - go/lsof
   - go/minterm
+  - go/mounter
   - go/pinentry
+  - go/protocol
+  - go/protocol/chat1
+  - go/protocol/gregor1
+  - go/protocol/keybase1
+  - go/pvl
   - go/qrcode
   - go/service
   - go/spotty
-  - go/kex2
-  - go/lsof
-  - go/mounter
 - name: github.com/keybase/go-codec
   version: cc2681ec6f901149e58af9d40a90da1aa370aadb
   subpackages:
   - codec
 - name: github.com/keybase/go-crypto
-  version: 513c7f62eea5c5d22fc665eb5665f5bf554af9ff
+  version: 3a7c7436ed7694957a3ced08902b0b93802c88da
   subpackages:
+  - brainpool
+  - cast5
   - openpgp
   - openpgp/armor
   - openpgp/clearsign
+  - openpgp/elgamal
   - openpgp/errors
   - openpgp/packet
   - openpgp/s2k
   - rsa
   - ssh/terminal
-  - brainpool
-  - cast5
-  - openpgp/elgamal
 - name: github.com/keybase/go-framed-msgpack-rpc
-  version: 090895b12240aa18b8d6a759a2638f0c1065c7d0
+  version: f08dee4c9e838e5a6c499ad4ed2e9a4ab6433361
+  subpackages:
+  - rpc
 - name: github.com/keybase/go-jsonw
-  version: 49900b186f7c75688c880fec4a1c0f20d9209e2a
+  version: b3050ccb78db8e2bd81378cd9b06554c5631bfbf
 - name: github.com/keybase/go-kext
   version: 812245fc176f35fbb18f9344ad0a9f363bd95435
 - name: github.com/keybase/go-keychain
-  version: 18e96b8b8ccf5706fbba9d97a82cbb009720bf02
+  version: fc621735da119d43461364cb0a35937cb95d4dd9
 - name: github.com/keybase/go-logging
   version: f3c7c3c1605e29ebcce430bb1e0d048faf4081ce
 - name: github.com/keybase/go-ps
-  version: eae146130275a0543f214777bbfa8f8f9b34ca53
+  version: 668c8856d9992f97248b3177d45743d2cc1068db
+  subpackages:
+  - darwincgo
 - name: github.com/keybase/go-triplesec
   version: b360b8252869a5ac88df3ed7897bc3b6d1e55dd2
   subpackages:
   - sha3
 - name: github.com/keybase/go-updater
-  version: a05bfa6382513c15afde21392f07617f4ad68de9
+  version: 371666410d019f71d8b8b886717010feb6ffa2bb
   subpackages:
-  - watchdog
   - process
-- name: github.com/keybase/gregor
-  version: 581542236cbb7dde1d4c21dd3073011b3e8e23ff
-  subpackages:
-  - protocol/gregor1
-  - rpc/client
-  - storage
-  - schema
+  - watchdog
 - name: github.com/keybase/npipe
-  version: 0938d701e50e580f5925c773055eb6d6b32a0cbc
+  version: 1f399aeffbab7364397986a1b531b6f02b15cd3e
 - name: github.com/keybase/saltpack
-  version: bde25349b648d471c05bfc77062eba282e887e98
+  version: 3db6dd125efa5c88d7d6fd67a5c4a39caefdcabc
   subpackages:
   - encoding/basex
 - name: github.com/kr/text
   version: 7cafcd837844e784b526369c9bce262804aebc60
 - name: github.com/mattn/go-isatty
-  version: 56b76bdf51f7708750eac80fa38b952bb9f32639
+  version: 66b8e73f3f5cda9f96b69efd03dd3d7fc4a5cdb8
 - name: github.com/PuerkitoBio/goquery
-  version: f0d75731e0db647903c8611d00c7b85002751317
+  version: 152b1a2c8f5d0340f658bb656032a39b94e52958
 - name: github.com/rogpeppe/rog-go
   version: f57ad5e24ab7813942c045f86eda1066eb969e98
   subpackages:
   - reverse
 - name: github.com/syndtr/goleveldb
-  version: ab8b5dcf1042e818ab68e770d465112a899b668e
+  version: 6b4daa5362b502898ddf367c5c11deb9e7a5c727
   subpackages:
   - leveldb
-  - leveldb/errors
   - leveldb/cache
   - leveldb/comparer
+  - leveldb/errors
   - leveldb/filter
   - leveldb/iterator
   - leveldb/journal
@@ -140,44 +151,49 @@ imports:
   - leveldb/table
   - leveldb/util
 - name: golang.org/x/crypto
-  version: 0c565bf13221fb55497d7ae2bb95694db1fd1bff
+  version: 9477e0b78b9ac3d0b03822fd95422e2fe07627cd
   subpackages:
+  - curve25519
   - nacl/box
   - nacl/secretbox
+  - pbkdf2
+  - poly1305
+  - ripemd160
+  - salsa20
+  - salsa20/salsa
   - scrypt
   - ssh/terminal
-  - salsa20
   - twofish
-  - poly1305
-  - curve25519
-  - salsa20/salsa
-  - pbkdf2
 - name: golang.org/x/net
-  version: b400c2eff1badec7022a8c8f5bea058b6315eed7
+  version: 4971afdc2f162e82d185353533d3cf16188a9f4e
   subpackages:
   - context
   - html
   - html/atom
-- name: golang.org/x/sys
-  version: a408501be4d17ee978c04a618e7a1b22af058c0e
+- name: golang.org/x/sync
+  version: 1ae7c7b29e06598039be46c5083819ba6fd7a97e
   subpackages:
+  - errgroup
+- name: golang.org/x/sys
+  version: b699b7032584f0953262cb2788a0ca19bb494703
+  subpackages:
+  - unix
   - windows
   - windows/registry
-  - unix
 - name: golang.org/x/text
-  version: ce78b075c2fbd48520f4995b173eb9fe18b56ef3
+  version: a263ba8db058568bb9beba166777d9c9dbe75d68
   subpackages:
-  - encoding/unicode
-  - transform
   - encoding
   - encoding/internal
   - encoding/internal/identifier
+  - encoding/unicode
   - internal/utf8internal
   - runes
+  - transform
 - name: h12.me/socks
   version: fa8c79229fbda5e9996dd91341b9fc023aa5d33a
 - name: stathat.com/c/ramcache
   version: d229745ea466bc903d6cdf310aa57bfffb45653b
   repo: git@github.com:stathat/ramcache.git
   vcs: git
-devImports: []
+testImports: []

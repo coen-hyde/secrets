@@ -8,11 +8,13 @@ import:
   repo: git@github.com:rsc/rsc.git
 - package: github.com/codegangsta/cli
 - package: github.com/keybase/client
+  version: ^1.0.18
   subpackages:
   - go/client
   - go/libkb
   - go/logger
   - go/protocol
+- package: github.com/keybase/go-framed-msgpack-rpc
 - package: golang.org/x/net
   subpackages:
   - context
