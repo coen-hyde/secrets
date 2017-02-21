@@ -70,7 +70,7 @@ func fileExists(path string) bool {
 }
 
 func (s *Scope) exists() bool {
-	return fileExists(s.Path())
+	return fileExists(s.KeybaseSinkPath())
 }
 
 // Get returns a secret from
@@ -88,13 +88,18 @@ func (s *Scope) Path() string {
 	return makeScopePath(s.Name)
 }
 
+// KeybaseSinkPath is the location of the keybase encryption
+func (s *Scope) KeybaseSinkPath() string {
+	return s.Path() + ".keybase"
+}
+
 // Load reads the secret scope from disk
 func (s *Scope) Load() error {
 	if !s.exists() {
 		return fmt.Errorf("Can not load scope %s from location %s. No such file", s.Name, s.Path())
 	}
 
-	src := client.NewFileSource(s.Path())
+	src := client.NewFileSource(s.KeybaseSinkPath())
 	sink := NewBufferSink()
 
 	err := Decrypt(src, sink, true, false)
@@ -132,7 +137,7 @@ func (s *Scope) Save() error {
 	}
 
 	src := NewBufferSource(&data)
-	sink := client.NewFileSink(s.Path())
+	sink := client.NewFileSink(s.KeybaseSinkPath())
 
 	return Encrypt(src, sink, s.GetKeybaseMemberUsernames())
 }
