@@ -108,14 +108,17 @@ func (s *Scope) Load() error {
 
 // AddMember adds a member to this scope
 func (s *Scope) AddMember(m *Member, adder *Member) {
-	m.AddedBy = adder.Uid
+	m.AddedBy = adder.Uuid
 	s.Members = append(s.Members, *m)
 }
 
-// GetMemberUsernames returns an array of member usernames
-func (s *Scope) GetMemberUsernames() (usernames []string) {
+//
+func (s *Scope) GetKeybaseMemberUsernames() (usernames []string) {
 	for _, member := range s.Members {
-		usernames = append(usernames, member.Username)
+		if member.Type != "keybase" {
+			continue
+		}
+		usernames = append(usernames, member.DisplayName)
 	}
 
 	return usernames
@@ -131,7 +134,7 @@ func (s *Scope) Save() error {
 	src := NewBufferSource(&data)
 	sink := client.NewFileSink(s.Path())
 
-	return Encrypt(src, sink, s.GetMemberUsernames())
+	return Encrypt(src, sink, s.GetKeybaseMemberUsernames())
 }
 
 // Export returns this scopes data in the request format

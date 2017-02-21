@@ -73,9 +73,6 @@ func (g *GlobalContext) initLibkb() {
 func (g *GlobalContext) intLogger() logger.Logger {
 	log := logger.NewWithCallDepth("secrets", 1)
 
-	// log.Configure("fancy", true, "")
-	// log.Info("Secrets")
-
 	return log
 }
 
