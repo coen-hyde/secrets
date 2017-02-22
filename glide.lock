@@ -1,5 +1,5 @@
 hash: 043f21b42496ef5891d2e38566f387dfa42e7b0ebf75a1a4334538096a91d8c8
-updated: 2017-02-21T16:27:44.022961454-08:00
+updated: 2017-02-21T16:47:45.594100099-08:00
 imports:
 - name: bazil.org/fuse
   version: 371fbbdaa8987b715bdd21d6adc4c9b20155f748
@@ -21,8 +21,6 @@ imports:
   version: 60ec3488bfea7cca02b021d106d9911120d25fe9
 - name: github.com/cenkalti/backoff
   version: b02f2bbce11d7ea6b97f282ef1771b0fe2f65ef3
-- name: github.com/codegangsta/cli
-  version: b4f4786f378c0c1d3336b5bb798094b166edf5a9
 - name: github.com/dustin/go-humanize
   version: bd88f87ad3a420f7bcf05e90566fd1ceb351fa7f
 - name: github.com/golang/groupcache
