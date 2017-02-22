@@ -5,7 +5,8 @@ import (
 	"os"
 	"strings"
 
-	cli "github.com/codegangsta/cli"
+	cli "github.com/urfave/cli"
+
 	"github.com/coen-hyde/secrets/libsecrets"
 )
 

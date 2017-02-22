@@ -6,7 +6,7 @@ import:
 - package: code.google.com/p/rsc
   vcs: git
   repo: git@github.com:rsc/rsc.git
-- package: github.com/codegangsta/cli
+- package: github.com/urfave/cli
 - package: github.com/keybase/client
   version: 1.0.18
   subpackages:

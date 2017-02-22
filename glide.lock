@@ -1,5 +1,5 @@
-hash: 68cf0c72ecb2be530210ef56f43d4a13204aa065a5db12b8e3a86fc05b4bf99d
-updated: 2017-02-21T14:35:21.716917457-08:00
+hash: 043f21b42496ef5891d2e38566f387dfa42e7b0ebf75a1a4334538096a91d8c8
+updated: 2017-02-21T16:27:44.022961454-08:00
 imports:
 - name: bazil.org/fuse
   version: 371fbbdaa8987b715bdd21d6adc4c9b20155f748
@@ -152,6 +152,8 @@ imports:
   - leveldb/storage
   - leveldb/table
   - leveldb/util
+- name: github.com/urfave/cli
+  version: 2526b57c56f30b50466c96c4133b1a4ad0f0191f
 - name: golang.org/x/crypto
   version: 9477e0b78b9ac3d0b03822fd95422e2fe07627cd
   subpackages:

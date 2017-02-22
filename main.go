@@ -3,7 +3,8 @@ package main
 import (
 	"os"
 
-	cli "github.com/codegangsta/cli"
+	cli "github.com/urfave/cli"
+
 	"github.com/coen-hyde/secrets/commands"
 	"github.com/coen-hyde/secrets/libsecrets"
 )

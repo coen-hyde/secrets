@@ -6,7 +6,7 @@ import (
 
 	"golang.org/x/net/context"
 
-	cli "github.com/codegangsta/cli"
+	cli "github.com/urfave/cli"
 
 	"github.com/coen-hyde/secrets/libsecrets"
 	"github.com/keybase/client/go/client"
