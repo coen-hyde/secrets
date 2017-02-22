@@ -74,9 +74,17 @@ func main() {
 				},
 				{
 					Name:  "add",
-					Usage: "Add a new member",
+					Usage: "Add members",
 					Action: func(c *cli.Context) error {
 						commands.MembersAdd(c)
+						return nil
+					},
+				},
+				{
+					Name:  "remove",
+					Usage: "Remove members",
+					Action: func(c *cli.Context) error {
+						commands.MembersRemove(c)
 						return nil
 					},
 				},

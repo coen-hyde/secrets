@@ -120,6 +120,28 @@ func (s *Scope) AddMembers(members []*Member, adder *Member) {
 	}
 }
 
+// AddMembers adds a list of members to the scope
+func (s *Scope) RemoveMembersByIdentifiers(members []string) {
+	membersToKeep := []Member{}
+
+	for i := 0; i < len(s.Members); i++ {
+		member := s.Members[i]
+		keep := true
+		for j := 0; j < len(members); j++ {
+			memberIdentifier := members[j]
+			if memberIdentifier == member.Identifier {
+				keep = false
+			}
+		}
+
+		if keep {
+			membersToKeep = append(membersToKeep, member)
+		}
+	}
+
+	s.Members = membersToKeep
+}
+
 //
 func (s *Scope) GetKeybaseMemberUsernames() (usernames []string) {
 	for _, member := range s.Members {

@@ -74,5 +74,15 @@ func MembersAdd(c *cli.Context) {
 
 // MembersRemove add a new member to the scope
 func MembersRemove(c *cli.Context) {
+	scope, err := libsecrets.NewScope("default")
+	if err != nil {
+		g.LogError(err)
+	}
 
+	scope.RemoveMembersByIdentifiers(c.Args())
+
+	err = scope.Save()
+	if err != nil {
+		g.LogError(err)
+	}
 }

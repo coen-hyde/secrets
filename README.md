@@ -49,5 +49,4 @@ The Future
 - Add environment variable export
 - Add import ability
 - Allow multiple scopes. A scope is a container for secrets and member permissions.
-- Allow multiple keybase users to be added at once.
 - Consider supporting other encryption backends such as pgp.
