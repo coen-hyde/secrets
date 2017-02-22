@@ -9,12 +9,17 @@ import (
 	"github.com/coen-hyde/secrets/libsecrets"
 )
 
+var (
+	Version string = "dev"
+)
+
 func main() {
 	libsecrets.G.Init()
 
 	app := cli.NewApp()
 	app.Name = "Secrets"
 	app.Usage = "Managing your application secrets"
+	app.Version = Version
 	app.Commands = []cli.Command{
 		{
 			Name:  "init",

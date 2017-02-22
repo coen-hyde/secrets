@@ -3,7 +3,7 @@ OS=$(shell uname -s)
 ARCH=$(shell uname -m)
 GOVERSION=$(shell go version)
 GOBIN=$(shell go env GOBIN)
-VERSION=alpha
+VERSION=$(shell git describe --tags --candidates=1)
 FLAGS=-X main.Version=$(VERSION) -s -w
 SRC=$(shell find . -name '*.go')
 
