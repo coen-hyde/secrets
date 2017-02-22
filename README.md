@@ -10,10 +10,11 @@ The encryption is performed by the local Keybase service running on your machine
 Installation
 ------------
 
-Keybase 0.17 or later is required. If you used brew to install Keybase do:
-`brew update && brew upgrade keybase`.
+Keybase 0.18 or later is required.
 
-Install via `go get github.com/coen-hyde/secrets` and ensure `$GOPATH/bin` is in your `$PATH`.
+`brew tap coen-hyde/cartons`
+
+`brew install coen-hyde/cartons/secrets`
 
 Usage
 -----
