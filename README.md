@@ -37,8 +37,11 @@ Usage
 ### List all members
 `$ secrets members`
 
-### Add member
-`$ secrets members add $keybase_name`
+### Add members
+`$ secrets members add $keybase_name $keybase_name $keybase_name`
+
+### Remove members
+`$ secrets members remove $keybase_name $keybase_name $keybase_name`
 
 All members added to a Secrets scope require a Keybase device key.
 
