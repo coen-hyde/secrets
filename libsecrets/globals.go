@@ -76,6 +76,11 @@ func (g *GlobalContext) intLogger() logger.Logger {
 	return log
 }
 
+func (g *GlobalContext) LogError(err error) {
+	g.Log.Error(err.Error())
+	os.Exit(1)
+}
+
 // CurrentUser Get the current Keybase User
 func CurrentUser() (*keybase1.User, error) {
 	configCli, err := client.GetConfigClient(libkb.G)

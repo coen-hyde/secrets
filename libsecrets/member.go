@@ -4,27 +4,24 @@ import (
 	"time"
 
 	"github.com/keybase/client/go/protocol/keybase1"
-	"github.com/satori/go.uuid"
 )
 
 // Member is a secret member
 type Member struct {
-	Uuid        uuid.UUID
-	DisplayName string
-	Type        string
-	KeybaseUid  keybase1.UID
-	AddedBy     uuid.UUID
-	DateAdded   time.Time
+	Identifier string
+	Type       string
+	KeybaseUid keybase1.UID
+	AddedBy    string
+	DateAdded  time.Time
 }
 
 // NewMember instantiate a scope struct
 func NewKeybaseMember(username string, uid keybase1.UID) *Member {
 	return &Member{
-		Uuid:        uuid.NewV4(),
-		DisplayName: username,
-		Type:        "keybase",
-		KeybaseUid:  uid,
-		DateAdded:   time.Now(),
+		Identifier: username,
+		Type:       "keybase",
+		KeybaseUid: uid,
+		DateAdded:  time.Now(),
 	}
 }
 

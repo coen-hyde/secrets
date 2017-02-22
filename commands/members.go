@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"os"
 
 	"golang.org/x/net/context"
 
@@ -14,16 +13,41 @@ import (
 	"github.com/keybase/client/go/protocol/keybase1"
 )
 
+func loadMembersFromArgs(c *cli.Context) ([]*libsecrets.Member, error) {
+	userCli, err := client.GetUserClient(libkb.G)
+	if err != nil {
+		return nil, err
+	}
+
+	args := c.Args()
+	members := []*libsecrets.Member{}
+
+	for i := 0; i < len(args); i++ {
+		loadUserArgs := keybase1.LoadUserByNameArg{
+			Username: args[i],
+		}
+
+		user, err := userCli.LoadUserByName(context.TODO(), loadUserArgs)
+		if err != nil {
+			return nil, err
+		}
+
+		member := libsecrets.NewMemberFromKeybaseUser(&user)
+		members = append(members, member)
+	}
+
+	return members, nil
+}
+
 // MembersList gets all or a specific value from the secrets
 func MembersList(c *cli.Context) {
 	scope, err := libsecrets.NewScope("default")
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		g.LogError(err)
 	}
 
 	for _, member := range scope.Members {
-		fmt.Println(member.DisplayName)
+		fmt.Println(member.Identifier)
 	}
 }
 
@@ -31,34 +55,20 @@ func MembersList(c *cli.Context) {
 func MembersAdd(c *cli.Context) {
 	scope, err := libsecrets.NewScope("default")
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		g.LogError(err)
 	}
 
-	userCli, err := client.GetUserClient(libkb.G)
+	members, err := loadMembersFromArgs(c)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		g.LogError(err)
 	}
 
-	loadUserArgs := keybase1.LoadUserByNameArg{
-		Username: c.Args().First(),
-	}
-
-	user, err := userCli.LoadUserByName(context.TODO(), loadUserArgs)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	member := libsecrets.NewMemberFromKeybaseUser(&user)
 	adder := libsecrets.NewMemberFromKeybaseUser(libsecrets.G.KeybaseUser)
-	scope.AddMember(member, adder)
+	scope.AddMembers(members, adder)
 
 	err = scope.Save()
 	if err != nil {
-		g.Log.Error(err.Error())
-		os.Exit(1)
+		g.LogError(err)
 	}
 }
 

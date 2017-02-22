@@ -44,7 +44,7 @@ func CreateScope(name string) (*Scope, error) {
 
 	// Add the creator of this scope as a member
 	member := NewMemberFromKeybaseUser(G.KeybaseUser)
-	scope.AddMember(member, member)
+	scope.AddMembers([]*Member{member}, member)
 
 	err = scope.Save()
 
@@ -111,10 +111,13 @@ func (s *Scope) Load() error {
 	return json.Unmarshal(sink.Bytes(), &s)
 }
 
-// AddMember adds a member to this scope
-func (s *Scope) AddMember(m *Member, adder *Member) {
-	m.AddedBy = adder.Uuid
-	s.Members = append(s.Members, *m)
+// AddMembers adds a list of members to the scope
+func (s *Scope) AddMembers(members []*Member, adder *Member) {
+	for i := 0; i < len(members); i++ {
+		member := members[i]
+		member.AddedBy = adder.Identifier
+		s.Members = append(s.Members, *member)
+	}
 }
 
 //
@@ -123,7 +126,7 @@ func (s *Scope) GetKeybaseMemberUsernames() (usernames []string) {
 		if member.Type != "keybase" {
 			continue
 		}
-		usernames = append(usernames, member.DisplayName)
+		usernames = append(usernames, member.Identifier)
 	}
 
 	return usernames
