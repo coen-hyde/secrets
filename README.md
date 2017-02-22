@@ -45,7 +45,6 @@ All members added to a Secrets scope require a Keybase device key.
 The Future
 ----------
 
-- Allow removal of members
 - Add environment variable export
 - Add import ability
 - Allow multiple scopes. A scope is a container for secrets and member permissions.
