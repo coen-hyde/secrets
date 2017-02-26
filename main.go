@@ -52,7 +52,7 @@ func main() {
 				cli.StringFlag{
 					Name:  "format, f",
 					Value: "human",
-					Usage: "Format to output the data in",
+					Usage: "Valid formats are 'human', 'json', 'env'.",
 				},
 			},
 			Action: func(c *cli.Context) error {
