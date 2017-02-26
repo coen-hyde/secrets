@@ -176,6 +176,8 @@ func (s *Scope) Export(format string) (string, error) {
 		formatter = NewFormatterJSON(&s.Data)
 	case "human":
 		formatter = NewFormatterHuman(&s.Data)
+	case "env":
+		formatter = NewFormatterEnv(&s.Data)
 	default:
 		return "", fmt.Errorf("Unknown export format %s", format)
 	}
