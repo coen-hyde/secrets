@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"os"
 
 	cli "github.com/urfave/cli"
 
@@ -13,13 +12,12 @@ import (
 func Get(c *cli.Context) {
 	scope, err := libsecrets.NewScope("default")
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		g.LogError(err)
 	}
 
 	if len(c.Args()) != 1 {
-		libsecrets.G.Log.Error("The get command requires exactly one argument")
-		os.Exit(1)
+		err := fmt.Errorf("The get command requires exactly one argument")
+		g.LogError(err)
 	}
 
 	key := c.Args().First()

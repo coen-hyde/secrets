@@ -53,7 +53,7 @@ func CreateScope(name string) (*Scope, error) {
 
 // MakeScopeLocation constructs the path of a scope
 func makeScopePath(name string) string {
-	return Dir() + "/" + name
+	return G.Dir() + "/" + name
 }
 
 func fileExists(path string) bool {

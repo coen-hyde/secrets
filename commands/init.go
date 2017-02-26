@@ -1,7 +1,6 @@
 package commands
 
 import (
-	"fmt"
 	"os"
 
 	cli "github.com/urfave/cli"
@@ -13,23 +12,21 @@ var g = libsecrets.G
 
 // Init initializes a secrets repository in the current directory
 func Init(c *cli.Context) {
-	if libsecrets.DirExists() {
+	if g.DirExists() {
 		g.Log.Warning("Secrets repository has already been initialized")
 		os.Exit(0)
 	}
 
 	// Create secrets directory
-	if err := os.Mkdir(libsecrets.Dir(), 0755); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+	if err := os.Mkdir(g.Dir(), 0755); err != nil {
+		g.LogError(err)
 	}
 
 	// TODO: Create initial scopes
 	_, err := libsecrets.CreateScope("default")
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		g.LogError(err)
 	}
 
-	g.Log.Info("Initialized empty secrets repository at %s", libsecrets.Dir())
+	g.Log.Info("Initialized empty secrets repository at %s", g.Dir())
 }

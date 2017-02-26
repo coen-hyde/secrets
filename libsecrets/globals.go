@@ -42,10 +42,9 @@ func (g *GlobalContext) Init() {
 	g.initLibkb()
 	g.Log = g.intLogger()
 
-	me, err := CurrentUser()
+	me, err := g.CurrentUser()
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		g.LogError(err)
 	}
 
 	g.KeybaseUser = me
@@ -82,7 +81,7 @@ func (g *GlobalContext) LogError(err error) {
 }
 
 // CurrentUser Get the current Keybase User
-func CurrentUser() (*keybase1.User, error) {
+func (g *GlobalContext) CurrentUser() (*keybase1.User, error) {
 	configCli, err := client.GetConfigClient(libkb.G)
 	if err != nil {
 		return nil, err
@@ -93,11 +92,10 @@ func CurrentUser() (*keybase1.User, error) {
 		return nil, err
 	}
 
-	// If the user isnt logged in then there is nothing we can do, exit
 	if !currentStatus.LoggedIn {
-		G.Log.Error("Please login to Keybase before using Secrets. You can do this by issuing the command `keybase login`")
-		os.Exit(1)
+		return nil, fmt.Errorf("Please login to Keybase before using Secrets. You can do this by issuing the command `keybase login`")
 	}
+
 	myUID := currentStatus.User.Uid
 
 	userCli, err := client.GetUserClient(libkb.G)
@@ -114,19 +112,18 @@ func CurrentUser() (*keybase1.User, error) {
 }
 
 // Dir returns the directory where the secrets should be stored
-func Dir() string {
+func (g *GlobalContext) Dir() string {
 	pwd, err := os.Getwd()
 
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		g.LogError(err)
 	}
 
 	return pwd + "/.secrets"
 }
 
 // DirExists does the secret directory exist?
-func DirExists() bool {
-	_, err := os.Stat(Dir())
+func (g *GlobalContext) DirExists() bool {
+	_, err := os.Stat(g.Dir())
 	return (err == nil)
 }

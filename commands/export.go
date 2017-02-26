@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"os"
 
 	cli "github.com/urfave/cli"
 
@@ -19,14 +18,12 @@ func printAll(s *libsecrets.Scope) {
 func Export(c *cli.Context) {
 	scope, err := libsecrets.NewScope("default")
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		g.LogError(err)
 	}
 
 	export, err := scope.Export(c.String("format"))
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		g.LogError(err)
 	}
 
 	fmt.Print(export)
