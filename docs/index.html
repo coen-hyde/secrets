@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Secrets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <style type="text/css">
+    .container {
+      max-width: 600px;
+    }
+
+    section {
+      margin-bottom: 3em;
+
+    }
+    h1 {
+      margin: 1.5em 0;
+      text-align: center;
+    }
+
+    h4 {
+      margin-top: 1.5em;
+    }
+
+    .intro span {
+      font-size: 16px;
+      vertical-align: middle;
+      margin-right: 1em;
+    }
+
+    .github {
+      display: inline-block;
+      background-image: url('assets/github-icon.png');
+      width: 32px;
+      height: 32px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="intro">
+      <h1>SECRETS</h1>
+      <p>Secrets is a tool to help manage your application's development secrets within a Team.</p>
+      <a href="https://github.com/coen-hyde/secrets"><span class="github"></span><span>View project on Github</span></a>
+    </div>
+    <section>
+      <h2>Installation</h2>
+      <p>Keybase 0.18 or later is required.</p>
+      <code>$ brew tap coen-hyde/cartons</code>
+      <br>
+      <code>$ brew install coen-hyde/cartons/secrets</code>
+    </section>
+    <section>
+      <h2>How it Works</h2>
+      <p>Secrets encrypts your secrets to a .secrets directory, which should then be committed to git. This coupling of secrets with code ensures that when the application is executed, it will have the correct secrets configuration. To grant your team mates access to the secrets repository simply do secrets members add ${keybase_username}.</p>
+      <p>The encryption is performed by the local Keybase service running on your machine. This allows Secrets to pass off all the hard work of making sure encryption is done right to Keybase. It also means Secrets doesn't need access to your Keybase authentication details. As long as you are logged into Keybase on your local machine Secrets can communicate to it via a socket.</p>
+    </section>
+    <section>
+      <h2>Usage</h2>
+
+      <h4>Initialize a Secrets repository</h4>
+      <code>$ secrets init</code>
+
+      <h4>Set a variable</h4>
+      <code>$ secrets set key=value</code>
+
+      <h4>Get a variable</h4>
+      <code>$ secret get key</code>
+
+      <h4>Export all variables in a human friendly format</h4>
+      <code>$ secrets export</code>
+
+      <h4>Export all variables in JSON format</h4>
+      <code>$ secrets export -f json</code>
+
+      <h4>List all members</h4>
+      <code>$ secrets members</code>
+
+      <h4>Add one or more members</h4>
+      <p>All members added to secrets require a Keybase device key.</p>
+      <code>$ secrets members add ${keybase_username}</code>
+
+      <h4>Remove one or more members</h4>
+      <code>$ secrets members remove ${keybase_username}</code>
+    </section>
+    <section>
+      <h2>License</h2>
+      <p>Copyright 2017 Coen Hyde</p>
+      <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+      <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+      <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+    </section>
+  </div>
+</body>
+</html>
