@@ -2,6 +2,7 @@ package commands
 
 import (
 	"fmt"
+	"strings"
 
 	"golang.org/x/net/context"
 
@@ -29,6 +30,7 @@ func loadMembersFromArgs(c *cli.Context) ([]*libsecrets.Member, error) {
 
 		user, err := userCli.LoadUserByName(context.TODO(), loadUserArgs)
 		if err != nil {
+			err := fmt.Errorf("Could not load Keybase user \"%s\"", loadUserArgs.Username)
 			return nil, err
 		}
 
@@ -64,12 +66,19 @@ func MembersAdd(c *cli.Context) {
 	}
 
 	adder := libsecrets.NewMemberFromKeybaseUser(libsecrets.G.KeybaseUser)
-	scope.AddMembers(members, adder)
+	membersAdded := scope.AddMembers(members, adder)
 
 	err = scope.Save()
 	if err != nil {
 		g.LogError(err)
 	}
+
+	if len(membersAdded) == 0 {
+		g.Log.Warning("No members were added")
+		return
+	}
+
+	g.Log.Notice("Added members %s", strings.Join(libsecrets.GetMemberListIdentifiers(membersAdded), ", "))
 }
 
 // MembersRemove add a new member to the scope
@@ -79,10 +88,12 @@ func MembersRemove(c *cli.Context) {
 		g.LogError(err)
 	}
 
-	scope.RemoveMembersByIdentifiers(c.Args())
+	membersRemoved := scope.RemoveMembersByIdentifiers(c.Args())
 
 	err = scope.Save()
 	if err != nil {
 		g.LogError(err)
 	}
+
+	g.Log.Notice("Removed members %s", strings.Join(libsecrets.GetMemberListIdentifiers(membersRemoved), ", "))
 }

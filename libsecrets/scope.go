@@ -112,17 +112,30 @@ func (s *Scope) Load() error {
 }
 
 // AddMembers adds a list of members to the scope
-func (s *Scope) AddMembers(members []*Member, adder *Member) {
+func (s *Scope) AddMembers(members []*Member, adder *Member) []*Member {
+	membersAdded := []*Member{}
+
 	for i := 0; i < len(members); i++ {
 		member := members[i]
+
+		// Member already exists
+		if s.MemberExists(member.Identifier) {
+			G.Log.Warning("%s is already a member of this scope", member.Identifier)
+			continue
+		}
+
 		member.AddedBy = adder.Identifier
 		s.Members = append(s.Members, *member)
+		membersAdded = append(membersAdded, member)
 	}
+
+	return membersAdded
 }
 
 // AddMembers adds a list of members to the scope
-func (s *Scope) RemoveMembersByIdentifiers(members []string) {
-	membersToKeep := []Member{}
+func (s *Scope) RemoveMembersByIdentifiers(members []string) []*Member {
+	membersKept := []Member{}
+	membersRemoved := []*Member{}
 
 	for i := 0; i < len(s.Members); i++ {
 		member := s.Members[i]
@@ -135,23 +148,37 @@ func (s *Scope) RemoveMembersByIdentifiers(members []string) {
 		}
 
 		if keep {
-			membersToKeep = append(membersToKeep, member)
+			membersKept = append(membersKept, member)
+		} else {
+			membersRemoved = append(membersRemoved, &member)
 		}
 	}
 
-	s.Members = membersToKeep
+	s.Members = membersKept
+
+	return membersRemoved
 }
 
-//
-func (s *Scope) GetKeybaseMemberUsernames() (usernames []string) {
+// MemberPointers returns a list with pointers to the members in this scope
+func (s *Scope) MemberPointers() (members []*Member) {
 	for _, member := range s.Members {
-		if member.Type != "keybase" {
-			continue
-		}
-		usernames = append(usernames, member.Identifier)
+		members = append(members, &member)
 	}
 
-	return usernames
+	return members
+}
+
+// MemberExists tests if a member already exists in this scope
+func (s *Scope) MemberExists(identifier string) bool {
+	result := false
+
+	for _, member := range s.Members {
+		if member.Identifier == identifier {
+			result = true
+		}
+	}
+
+	return result
 }
 
 // Save writes the secret scope to disk
@@ -164,7 +191,7 @@ func (s *Scope) Save() error {
 	src := NewBufferSource(&data)
 	sink := client.NewFileSink(s.KeybaseSinkPath())
 
-	return Encrypt(src, sink, s.GetKeybaseMemberUsernames())
+	return Encrypt(src, sink, GetMemberListIdentifiers(s.MemberPointers()))
 }
 
 // Export returns this scopes data in the request format

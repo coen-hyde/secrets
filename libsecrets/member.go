@@ -29,3 +29,15 @@ func NewKeybaseMember(username string, uid keybase1.UID) *Member {
 func NewMemberFromKeybaseUser(user *keybase1.User) *Member {
 	return NewKeybaseMember(user.Username, user.Uid)
 }
+
+func GetMemberListIdentifiers(members []*Member) (identifiers []string) {
+	for _, memberPointer := range members {
+		member := *memberPointer
+		if member.Type != "keybase" {
+			continue
+		}
+		identifiers = append(identifiers, member.Identifier)
+	}
+
+	return identifiers
+}
