@@ -212,6 +212,29 @@ func (s *Scope) Export(format string) (string, error) {
 	return formatter.String(), nil
 }
 
+func (s *Scope) Import(contents string, format string) error {
+	var parser ImportParser
+
+	switch format {
+	case "json":
+		parser = NewImportParserJSON()
+	default:
+		return fmt.Errorf("Unknown import format %s", format)
+	}
+
+	structuredData, err := parser.Parse(contents)
+
+	if err != nil {
+		return err
+	}
+
+	for k, v := range structuredData {
+		s.Data[k] = v
+	}
+
+	return nil
+}
+
 // ToJSON converts this scope to json
 func (s *Scope) ToJSON() ([]byte, error) {
 	return json.Marshal(s)

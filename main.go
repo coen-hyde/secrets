@@ -61,6 +61,21 @@ func main() {
 			},
 		},
 		{
+			Name:  "import",
+			Usage: "Import data in a scope",
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "format, f",
+					Value: "env",
+					Usage: "Valid formats are 'json' and 'env'.",
+				},
+			},
+			Action: func(c *cli.Context) error {
+				commands.Import(c)
+				return nil
+			},
+		},
+		{
 			Name:  "members",
 			Usage: "Member management",
 			Subcommands: []cli.Command{
