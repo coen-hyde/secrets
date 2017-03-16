@@ -1,6 +1,9 @@
 package commands
 
 import (
+	"bufio"
+	"os"
+
 	cli "github.com/urfave/cli"
 
 	"github.com/coen-hyde/secrets/libsecrets"
@@ -13,8 +16,19 @@ func Import(c *cli.Context) {
 		g.LogError(err)
 	}
 
-	rawData := c.Args().First()
-	err = scope.Import(rawData, c.String("format"))
+	data := c.String("data")
+
+	// Attempt to fetch data from stdin if no data was passed via arguments
+	if len(data) == 0 {
+		reader := bufio.NewReader(os.Stdin)
+		scanner := bufio.NewScanner(reader)
+
+		for scanner.Scan() {
+			data += scanner.Text()
+		}
+	}
+
+	err = scope.Import(data, c.String("format"))
 	if err != nil {
 		g.LogError(err)
 	}

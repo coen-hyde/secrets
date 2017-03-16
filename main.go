@@ -69,6 +69,11 @@ func main() {
 					Value: "env",
 					Usage: "Valid formats are 'json' and 'env'.",
 				},
+				cli.StringFlag{
+					Name:  "data, d",
+					Value: "",
+					Usage: "Data to import",
+				},
 			},
 			Action: func(c *cli.Context) error {
 				commands.Import(c)
