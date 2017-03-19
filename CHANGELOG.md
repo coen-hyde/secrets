@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - Environment variable export format option
+- Import command supporting json and yaml formats
+- Delete command
 
 ### Changed
 - Better error logging
