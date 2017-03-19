@@ -20,3 +20,4 @@ import:
   subpackages:
   - context
 - package: "github.com/satori/go.uuid"
+- package: "gopkg.in/yaml.v2"

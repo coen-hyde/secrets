@@ -24,7 +24,7 @@ func Import(c *cli.Context) {
 		scanner := bufio.NewScanner(reader)
 
 		for scanner.Scan() {
-			data += scanner.Text()
+			data += "\n" + scanner.Text()
 		}
 	}
 

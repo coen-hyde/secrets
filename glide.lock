@@ -1,5 +1,5 @@
-hash: 043f21b42496ef5891d2e38566f387dfa42e7b0ebf75a1a4334538096a91d8c8
-updated: 2017-02-21T16:47:45.594100099-08:00
+hash: fb829c3ae697cefe2093095ded10a579ed983a23bee791f3c8d700e681b79381
+updated: 2017-03-15T23:47:46.862741546-07:00
 imports:
 - name: bazil.org/fuse
   version: 371fbbdaa8987b715bdd21d6adc4c9b20155f748
@@ -192,6 +192,8 @@ imports:
   - internal/utf8internal
   - runes
   - transform
+- name: gopkg.in/yaml.v2
+  version: a3f3340b5840cee44f372bddb5880fcbc419b46a
 - name: h12.me/socks
   version: fa8c79229fbda5e9996dd91341b9fc023aa5d33a
 - name: stathat.com/c/ramcache

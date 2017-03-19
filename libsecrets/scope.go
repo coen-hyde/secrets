@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/keybase/client/go/client"
 )
@@ -213,11 +214,13 @@ func (s *Scope) Export(format string) (string, error) {
 }
 
 func (s *Scope) Import(contents string, format string) error {
-	var parser ImportParser
+	var parser Importer
 
 	switch format {
 	case "json":
-		parser = NewImportParserJSON()
+		parser = NewImporterJSON()
+	case "yaml":
+		parser = NewImporterYAML()
 	default:
 		return fmt.Errorf("Unknown import format %s", format)
 	}
@@ -229,7 +232,18 @@ func (s *Scope) Import(contents string, format string) error {
 	}
 
 	for k, v := range structuredData {
-		s.Data[k] = v
+		switch valueType := v.(type) {
+		case string:
+			s.Data[k] = v.(string)
+		case float64:
+			s.Data[k] = strconv.FormatFloat(v.(float64), 'f', -1, 64)
+		case int64:
+			s.Data[k] = strconv.FormatInt(v.(int64), 10)
+		case int:
+			s.Data[k] = strconv.Itoa(v.(int))
+		default:
+			return fmt.Errorf("Can not use %s as string", valueType)
+		}
 	}
 
 	return nil
