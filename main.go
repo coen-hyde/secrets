@@ -46,6 +46,15 @@ func main() {
 			},
 		},
 		{
+			Name:    "del",
+			Aliases: []string{"remove", "delete"},
+			Usage:   "Delete a value",
+			Action: func(c *cli.Context) error {
+				commands.Del(c)
+				return nil
+			},
+		},
+		{
 			Name:  "export",
 			Usage: "Export all data in a scope",
 			Flags: []cli.Flag{

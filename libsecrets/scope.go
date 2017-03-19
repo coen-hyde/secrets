@@ -84,6 +84,11 @@ func (s *Scope) Set(key string, value string) {
 	s.Data[key] = value
 }
 
+// Set returns a secret from
+func (s *Scope) Del(key string) {
+	delete(s.Data, key)
+}
+
 // Path returns the file path of the secret file
 func (s *Scope) Path() string {
 	return makeScopePath(s.Name)
