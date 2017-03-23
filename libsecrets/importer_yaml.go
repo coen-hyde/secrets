@@ -15,7 +15,6 @@ func NewImporterYAML() *ImporterYAML {
 // Parse converts the raw yaml to a structured data
 func (f *ImporterYAML) Parse(data string) (map[string]interface{}, error) {
 	var structuredData map[string]interface{}
-	fmt.Println(data)
 	err := yaml.Unmarshal([]byte(data), &structuredData)
 
 	if err != nil {
