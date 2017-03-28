@@ -1,15 +1,18 @@
 package libsecrets
 
 import (
-	"fmt"
 	"gopkg.in/yaml.v2"
 )
 
 // ParserJSON parse's data from json
-type ImporterYAML struct{}
+type ImporterYAML struct {
+	Options ImportOptions
+}
 
-func NewImporterYAML() *ImporterYAML {
-	return &ImporterYAML{}
+func NewImporterYAML(options ImportOptions) *ImporterYAML {
+	return &ImporterYAML{
+		Options: options,
+	}
 }
 
 // Parse converts the raw yaml to a structured data

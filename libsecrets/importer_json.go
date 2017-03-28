@@ -3,10 +3,14 @@ package libsecrets
 import "encoding/json"
 
 // ParserJSON parse's data from json
-type ImporterJSON struct{}
+type ImporterJSON struct {
+	Options ImportOptions
+}
 
-func NewImporterJSON() *ImporterJSON {
-	return &ImporterJSON{}
+func NewImporterJSON(options ImportOptions) *ImporterJSON {
+	return &ImporterJSON{
+		Options: options,
+	}
 }
 
 // Parse converts the raw json to a structured data

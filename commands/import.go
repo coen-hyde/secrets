@@ -28,7 +28,11 @@ func Import(c *cli.Context) {
 		}
 	}
 
-	err = scope.Import(data, c.String("format"))
+	options := libsecrets.ImportOptions{
+		Format: c.String("format"),
+	}
+
+	err = scope.Import(data, options)
 	if err != nil {
 		g.LogError(err)
 	}

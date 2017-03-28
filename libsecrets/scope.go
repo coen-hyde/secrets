@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"regexp"
 	"strconv"
 
 	"github.com/keybase/client/go/client"
@@ -14,6 +15,11 @@ type Scope struct {
 	Name    string
 	Members []Member
 	Data    map[string]string
+}
+
+type ImportOptions struct {
+	Format string
+	regex  *regexp.Regexp
 }
 
 // NewScope instantiate a scope struct
@@ -218,16 +224,16 @@ func (s *Scope) Export(format string) (string, error) {
 	return formatter.String(), nil
 }
 
-func (s *Scope) Import(contents string, format string) error {
+func (s *Scope) Import(contents string, options ImportOptions) error {
 	var parser Importer
 
-	switch format {
+	switch options.Format {
 	case "json":
-		parser = NewImporterJSON()
+		parser = NewImporterJSON(options)
 	case "yaml":
-		parser = NewImporterYAML()
+		parser = NewImporterYAML(options)
 	default:
-		return fmt.Errorf("Unknown import format %s", format)
+		return fmt.Errorf("Unknown import format %s", options.Format)
 	}
 
 	structuredData, err := parser.Parse(contents)
