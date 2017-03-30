@@ -212,11 +212,11 @@ func (s *Scope) Export(format string) (string, error) {
 
 	switch format {
 	case "json":
-		formatter = NewFormatterJSON(&s.Data)
+		formatter = NewExporterJSON(&s.Data)
 	case "human":
-		formatter = NewFormatterHuman(&s.Data)
+		formatter = NewExporterHuman(&s.Data)
 	case "env":
-		formatter = NewFormatterEnv(&s.Data)
+		formatter = NewExporterEnv(&s.Data)
 	default:
 		return "", fmt.Errorf("Unknown export format %s", format)
 	}

@@ -2,20 +2,20 @@ package libsecrets
 
 import "strings"
 
-// FormatterEnv formats data for environment variable
-type FormatterEnv struct {
+// ExporterEnv formats data for environment variable
+type ExporterEnv struct {
 	data *map[string]string
 }
 
-// NewFormatterHuman instantiate a json formater
-func NewFormatterEnv(data *map[string]string) *FormatterEnv {
-	return &FormatterEnv{
+// NewExporterHuman instantiate a json formater
+func NewExporterEnv(data *map[string]string) *ExporterEnv {
+	return &ExporterEnv{
 		data: data,
 	}
 }
 
 // String exports the data
-func (f *FormatterEnv) String() string {
+func (f *ExporterEnv) String() string {
 	output := ""
 
 	for key, value := range *f.data {
