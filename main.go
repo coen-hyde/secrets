@@ -61,7 +61,7 @@ func main() {
 				cli.StringFlag{
 					Name:  "format, f",
 					Value: "human",
-					Usage: "Valid formats are 'human', 'json', 'env'.",
+					Usage: "Valid formats are 'human', 'json', 'yaml' and 'env'.",
 				},
 			},
 			Action: func(c *cli.Context) error {
@@ -71,12 +71,12 @@ func main() {
 		},
 		{
 			Name:  "import",
-			Usage: "Import data in a scope",
+			Usage: "Import data into a scope",
 			Flags: []cli.Flag{
 				cli.StringFlag{
 					Name:  "format, f",
 					Value: "env",
-					Usage: "Valid formats are 'json' and 'env'.",
+					Usage: "Valid formats are 'json' and 'yaml'.",
 				},
 				cli.StringFlag{
 					Name:  "data, d",

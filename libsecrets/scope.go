@@ -213,6 +213,8 @@ func (s *Scope) Export(format string) (string, error) {
 	switch format {
 	case "json":
 		formatter = NewExporterJSON(&s.Data)
+	case "yaml":
+		formatter = NewExporterYAML(&s.Data)
 	case "human":
 		formatter = NewExporterHuman(&s.Data)
 	case "env":
