@@ -8,7 +8,7 @@ FLAGS=-X main.Version=$(VERSION) -s -w
 SRC=$(shell find . -name '*.go')
 
 deps:
-	glide install -v
+	glide install -v --strip-vcs
 
 test:
 	go test -v $(shell go list ./... | grep -v /vendor/)
