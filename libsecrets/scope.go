@@ -17,6 +17,7 @@ type Scope struct {
 	Data    map[string]string
 }
 
+// ImportOptions is a set of options for importing secrets
 type ImportOptions struct {
 	Format string
 	regex  *regexp.Regexp
@@ -76,22 +77,22 @@ func fileExists(path string) bool {
 	return false
 }
 
-// Exists returns whether the scope has already been persisted
+// Exists returns whether a Scope exists on disk
 func (s *Scope) Exists() bool {
 	return fileExists(s.KeybaseSinkPath())
 }
 
-// Get returns a secret from
+// Get returns a secret from a Scope
 func (s *Scope) Get(key string) string {
 	return s.Data[key]
 }
 
-// Set returns a secret from
+// Set returns a secret from a Scope
 func (s *Scope) Set(key string, value string) {
 	s.Data[key] = value
 }
 
-// Set returns a secret from
+// Del deletes a secret from a Scope
 func (s *Scope) Del(key string) {
 	delete(s.Data, key)
 }
@@ -124,7 +125,7 @@ func (s *Scope) Load() error {
 	return json.Unmarshal(sink.Bytes(), &s)
 }
 
-// AddMembers adds a list of members to the scope
+// AddMembers adds a list of members to the Scope
 func (s *Scope) AddMembers(members []*Member, adder *Member) []*Member {
 	membersAdded := []*Member{}
 
@@ -145,7 +146,7 @@ func (s *Scope) AddMembers(members []*Member, adder *Member) []*Member {
 	return membersAdded
 }
 
-// AddMembers adds a list of members to the scope
+// RemoveMembersByIdentifiers removes members from a Scope
 func (s *Scope) RemoveMembersByIdentifiers(members []string) []*Member {
 	membersKept := []Member{}
 	membersRemoved := []*Member{}
@@ -207,7 +208,7 @@ func (s *Scope) Save() error {
 	return Encrypt(src, sink, GetMemberListIdentifiers(s.MemberPointers()))
 }
 
-// Export returns this scopes data in the request format
+// Export returns this Scope's data in the requested format
 func (s *Scope) Export(format string) (string, error) {
 	var formatter Formatter
 
@@ -227,6 +228,7 @@ func (s *Scope) Export(format string) (string, error) {
 	return formatter.String(), nil
 }
 
+// Import adds `contents` to the Scope with the given options
 func (s *Scope) Import(contents string, options ImportOptions) error {
 	var parser Importer
 
