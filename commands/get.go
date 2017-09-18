@@ -10,9 +10,19 @@ import (
 
 // Get gets a value by key from a scope
 func Get(c *cli.Context) {
-	scope, err := libsecrets.NewScope("default")
+	context := c.GlobalString("context")
+
+	scope, err := libsecrets.NewScope(context)
 	if err != nil {
 		g.LogError(err)
+	}
+
+	if !scope.Exists() {
+		scope, err = libsecrets.CreateScope(context)
+
+		if err != nil {
+			g.LogError(err)
+		}
 	}
 
 	if len(c.Args()) != 1 {

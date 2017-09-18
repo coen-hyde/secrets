@@ -31,7 +31,7 @@ func NewScope(name string) (scope *Scope, err error) {
 	}
 
 	// Load existing data if it exists
-	if scope.exists() {
+	if scope.Exists() {
 		err = scope.Load()
 	}
 
@@ -76,7 +76,8 @@ func fileExists(path string) bool {
 	return false
 }
 
-func (s *Scope) exists() bool {
+// Exists returns whether the scope has already been persisted
+func (s *Scope) Exists() bool {
 	return fileExists(s.KeybaseSinkPath())
 }
 
@@ -107,7 +108,7 @@ func (s *Scope) KeybaseSinkPath() string {
 
 // Load reads the secret scope from disk
 func (s *Scope) Load() error {
-	if !s.exists() {
+	if !s.Exists() {
 		return fmt.Errorf("Can not load scope %s from location %s. No such file", s.Name, s.Path())
 	}
 

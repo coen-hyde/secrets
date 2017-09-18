@@ -120,6 +120,15 @@ func main() {
 			},
 		},
 	}
+	var context string
+	app.Flags = []cli.Flag{
+		cli.StringFlag{
+			Name:        "context,c",
+			Value:       "default",
+			Usage:       "context for the operation",
+			Destination: &context,
+		},
+	}
 
 	app.Run(os.Args)
 }
