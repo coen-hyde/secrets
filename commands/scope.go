@@ -2,6 +2,8 @@ package commands
 
 import (
 	"fmt"
+	"path/filepath"
+	"strings"
 
 	cli "github.com/urfave/cli"
 
@@ -33,5 +35,13 @@ func ScopeRemove(c *cli.Context) {
 
 // ScopeList lists all scopes
 func ScopeList(c *cli.Context) {
-	fmt.Println("scope list")
+	dir := g.Dir()
+	files, _ := filepath.Glob(dir + "/*.keybase")
+
+	for i := 0; i < len(files); i++ {
+		file := files[i]
+		basename := filepath.Base(file)
+		filename := strings.TrimSuffix(basename, filepath.Ext(basename))
+		fmt.Println(filename)
+	}
 }
