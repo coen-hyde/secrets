@@ -12,9 +12,9 @@ Installation
 
 Keybase 0.18 or later is required.
 
-`brew tap coen-hyde/cartons`
+`brew tap bugcrowd/cartons`
 
-`brew install coen-hyde/cartons/secrets`
+`brew install bugcrowd/cartons/secrets`
 
 Usage
 -----

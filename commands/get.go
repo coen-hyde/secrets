@@ -5,7 +5,7 @@ import (
 
 	cli "github.com/urfave/cli"
 
-	"github.com/coen-hyde/secrets/libsecrets"
+	"github.com/bugcrowd/secrets/libsecrets"
 )
 
 // Get gets a value by key from a scope

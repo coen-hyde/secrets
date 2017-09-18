@@ -6,7 +6,7 @@ import (
 
 	cli "github.com/urfave/cli"
 
-	"github.com/coen-hyde/secrets/libsecrets"
+	"github.com/bugcrowd/secrets/libsecrets"
 )
 
 // Export gets all values from the secrets
