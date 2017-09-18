@@ -13,17 +13,9 @@ import (
 func Set(c *cli.Context) {
 	context := c.GlobalString("context")
 
-	scope, err := libsecrets.NewScope(context)
+	scope, err := libsecrets.GetScope(context)
 	if err != nil {
 		g.LogError(err)
-	}
-
-	if !scope.Exists() {
-		scope, err = libsecrets.CreateScope(context)
-
-		if err != nil {
-			g.LogError(err)
-		}
 	}
 
 	kv := strings.SplitN(c.Args().First(), "=", 2)

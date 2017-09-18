@@ -23,7 +23,9 @@ type ImportOptions struct {
 	regex  *regexp.Regexp
 }
 
-// NewScope instantiate a scope struct
+// NewScope instantiates a Scope struct.
+// If the Scope already exists then creation will fail.
+// In that case use `GetScope`.
 func NewScope(name string) (scope *Scope, err error) {
 	scope = &Scope{
 		Name:    name,
@@ -31,30 +33,13 @@ func NewScope(name string) (scope *Scope, err error) {
 		Data:    make(map[string]string),
 	}
 
-	// Load existing data if it exists
-	if scope.Exists() {
-		err = scope.Load()
-	}
-
 	return
 }
 
-// CreateScope creates a new scope
-func CreateScope(name string) (*Scope, error) {
-	if fileExists(makeScopePath(name)) {
-		return nil, fmt.Errorf("Can not create scope %s. Scope already exists", name)
-	}
-
-	scope, err := NewScope(name)
-	if err != nil {
-		return nil, err
-	}
-
-	// Add the creator of this scope as a member
-	member := NewMemberFromKeybaseUser(G.KeybaseUser)
-	scope.AddMembers([]*Member{member}, member)
-
-	err = scope.Save()
+// GetScope returns an existing Scope
+func GetScope(name string) (scope *Scope, err error) {
+	scope, err = NewScope(name)
+	err = scope.Load()
 
 	return scope, err
 }
@@ -197,6 +182,13 @@ func (s *Scope) MemberExists(identifier string) bool {
 
 // Save writes the secret scope to disk
 func (s *Scope) Save() error {
+	// If this is a new Scope (not on disk yet), then we need to add the
+	// current keybase user as a member
+	if !s.Exists() {
+		member := NewMemberFromKeybaseUser(G.KeybaseUser)
+		s.AddMembers([]*Member{member}, member)
+	}
+
 	data, err := s.ToJSON()
 	if err != nil {
 		return err

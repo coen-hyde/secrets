@@ -23,7 +23,12 @@ func Init(c *cli.Context) {
 	}
 
 	// TODO: Create initial scopes
-	_, err := libsecrets.CreateScope("default")
+	scope, err := libsecrets.NewScope("default")
+	if err != nil {
+		g.LogError(err)
+	}
+
+	err = scope.Save()
 	if err != nil {
 		g.LogError(err)
 	}

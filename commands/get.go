@@ -11,22 +11,14 @@ import (
 // Get gets a value by key from a scope
 func Get(c *cli.Context) {
 	context := c.GlobalString("context")
+	scope, err := libsecrets.GetScope(context)
 
-	scope, err := libsecrets.NewScope(context)
 	if err != nil {
 		g.LogError(err)
 	}
 
-	if !scope.Exists() {
-		scope, err = libsecrets.CreateScope(context)
-
-		if err != nil {
-			g.LogError(err)
-		}
-	}
-
 	if len(c.Args()) != 1 {
-		err := fmt.Errorf("The get command requires exactly one argument")
+		err = fmt.Errorf("The get command requires exactly one argument")
 		g.LogError(err)
 	}
 
