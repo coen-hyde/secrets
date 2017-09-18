@@ -43,7 +43,7 @@ func loadMembersFromArgs(c *cli.Context) ([]*libsecrets.Member, error) {
 
 // MembersList gets all or a specific value from the secrets
 func MembersList(c *cli.Context) {
-	scope, err := libsecrets.NewScope("default")
+	scope, err := libsecrets.GetScope("default")
 	if err != nil {
 		g.LogError(err)
 	}
@@ -55,7 +55,7 @@ func MembersList(c *cli.Context) {
 
 // MembersAdd add a new member to the scope
 func MembersAdd(c *cli.Context) {
-	scope, err := libsecrets.NewScope("default")
+	scope, err := libsecrets.GetScope("default")
 	if err != nil {
 		g.LogError(err)
 	}
@@ -83,7 +83,7 @@ func MembersAdd(c *cli.Context) {
 
 // MembersRemove add a new member to the scope
 func MembersRemove(c *cli.Context) {
-	scope, err := libsecrets.NewScope("default")
+	scope, err := libsecrets.GetScope("default")
 	if err != nil {
 		g.LogError(err)
 	}

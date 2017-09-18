@@ -26,7 +26,7 @@ type ImportOptions struct {
 // NewScope instantiates a Scope struct.
 // If the Scope already exists then creation will fail.
 // In that case use `GetScope`.
-func NewScope(name string) (scope *Scope, err error) {
+func NewScope(name string) (scope *Scope) {
 	scope = &Scope{
 		Name:    name,
 		Members: make([]Member, 0),
@@ -38,10 +38,25 @@ func NewScope(name string) (scope *Scope, err error) {
 
 // GetScope returns an existing Scope
 func GetScope(name string) (scope *Scope, err error) {
-	scope, err = NewScope(name)
+	scope = NewScope(name)
 	err = scope.Load()
 
 	return scope, err
+}
+
+// CreateScope creates a new Scope and saves it to disk.
+func CreateScope(name string) (scope *Scope, err error) {
+	scope = NewScope(name)
+	if scope.Exists() {
+		return nil, fmt.Errorf("The \"%s\" scope already exists", scope.Name)
+	}
+
+	err = scope.Save()
+	if err != nil {
+		return nil, err
+	}
+
+	return scope, nil
 }
 
 // MakeScopeLocation constructs the path of a scope

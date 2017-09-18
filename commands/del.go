@@ -8,7 +8,7 @@ import (
 
 // Set sets a value in secrets
 func Del(c *cli.Context) {
-	scope, err := libsecrets.NewScope("default")
+	scope, err := libsecrets.GetScope("default")
 	if err != nil {
 		g.LogError(err)
 	}
