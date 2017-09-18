@@ -59,6 +59,23 @@ func CreateScope(name string) (scope *Scope, err error) {
 	return scope, nil
 }
 
+// RemoveScope deletes an existing scope
+func RemoveScope(name string) (err error) {
+	scope := NewScope(name)
+	path := scope.KeybaseSinkPath()
+
+	if !scope.Exists() {
+		return fmt.Errorf("The \"%s\" scope does not exist", name)
+	}
+
+	err = os.Remove(path)
+	if err != nil {
+		return err
+	}
+
+	return
+}
+
 // MakeScopeLocation constructs the path of a scope
 func makeScopePath(name string) string {
 	return G.Dir() + "/" + name
@@ -110,7 +127,7 @@ func (s *Scope) KeybaseSinkPath() string {
 // Load reads the secret scope from disk
 func (s *Scope) Load() error {
 	if !s.Exists() {
-		return fmt.Errorf("Can not load scope %s from location %s. No such file", s.Name, s.Path())
+		return fmt.Errorf("The \"%s\" scope does not exist", s.Name)
 	}
 
 	src := client.NewFileSource(s.KeybaseSinkPath())

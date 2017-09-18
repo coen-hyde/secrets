@@ -29,14 +29,26 @@ func ScopeAdd(c *cli.Context) {
 
 // ScopeRemove removes a scope
 func ScopeRemove(c *cli.Context) {
-	scope := c.String("scope")
-	fmt.Printf("scope remove %s", scope)
+	args := c.Args()
+
+	if len(args) != 1 {
+		err := fmt.Errorf("The remove command requires exactly one argument")
+		g.LogError(err)
+	}
+	scope := args[0]
+	err := libsecrets.RemoveScope(scope)
+
+	if err != nil {
+		err := fmt.Errorf("Error removing the \"%s\" scope: %s", scope, err)
+		g.LogError(err)
+	}
+
+	g.Log.Notice("Removed the \"%s\" scope", scope)
 }
 
 // ScopeList lists all scopes
 func ScopeList(c *cli.Context) {
-	dir := g.Dir()
-	files, _ := filepath.Glob(dir + "/*.keybase")
+	files, _ := filepath.Glob(g.Dir() + "/*.keybase")
 
 	for i := 0; i < len(files); i++ {
 		file := files[i]
