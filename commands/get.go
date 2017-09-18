@@ -10,7 +10,7 @@ import (
 
 // Get gets a value by key from a scope
 func Get(c *cli.Context) {
-	scopeName := c.GlobalString("scope")
+	scopeName := c.String("scope")
 	scope, err := libsecrets.GetScope(scopeName)
 
 	if err != nil {

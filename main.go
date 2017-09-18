@@ -36,6 +36,13 @@ func main() {
 				commands.Get(c)
 				return nil
 			},
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "scope, s",
+					Value: "default",
+					Usage: "Scope to use",
+				},
+			},
 		},
 		{
 			Name:  "set",
@@ -43,6 +50,13 @@ func main() {
 			Action: func(c *cli.Context) error {
 				commands.Set(c)
 				return nil
+			},
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "scope, s",
+					Value: "default",
+					Usage: "Scope to use",
+				},
 			},
 		},
 		{
@@ -52,6 +66,13 @@ func main() {
 			Action: func(c *cli.Context) error {
 				commands.Del(c)
 				return nil
+			},
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "scope, s",
+					Value: "default",
+					Usage: "Scope to use",
+				},
 			},
 		},
 		{
@@ -119,13 +140,35 @@ func main() {
 				},
 			},
 		},
-	}
-
-	app.Flags = []cli.Flag{
-		cli.StringFlag{
-			Name:  "scope,s",
-			Value: "default",
-			Usage: "scope for the operation",
+		{
+			Name:  "scope",
+			Usage: "Scope management",
+			Subcommands: []cli.Command{
+				{
+					Name:  "list",
+					Usage: "List existing scopes",
+					Action: func(c *cli.Context) error {
+						commands.ScopeList(c)
+						return nil
+					},
+				},
+				{
+					Name:  "add",
+					Usage: "Add a new scope",
+					Action: func(c *cli.Context) error {
+						commands.ScopeAdd(c)
+						return nil
+					},
+				},
+				{
+					Name:  "remove",
+					Usage: "Remove a scope",
+					Action: func(c *cli.Context) error {
+						commands.ScopeRemove(c)
+						return nil
+					},
+				},
+			},
 		},
 	}
 
