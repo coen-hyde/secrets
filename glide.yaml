@@ -1,4 +1,4 @@
-package: github.com/coen-hyde/secrets
+package: github.com/bugcrowd/secrets
 import:
 - package: stathat.com/c/ramcache
   vcs: git

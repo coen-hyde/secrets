@@ -5,8 +5,8 @@ import (
 
 	cli "github.com/urfave/cli"
 
-	"github.com/coen-hyde/secrets/commands"
-	"github.com/coen-hyde/secrets/libsecrets"
+	"github.com/bugcrowd/secrets/commands"
+	"github.com/bugcrowd/secrets/libsecrets"
 )
 
 var (

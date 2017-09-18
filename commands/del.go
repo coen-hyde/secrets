@@ -3,7 +3,7 @@ package commands
 import (
 	cli "github.com/urfave/cli"
 
-	"github.com/coen-hyde/secrets/libsecrets"
+	"github.com/bugcrowd/secrets/libsecrets"
 )
 
 // Set sets a value in secrets
