@@ -23,10 +23,7 @@ func Init(c *cli.Context) {
 	}
 
 	// TODO: Create initial scopes
-	_, err := libsecrets.CreateScope("default")
-	if err != nil {
-		g.LogError(err)
-	}
+	libsecrets.CreateScope("default")
 
 	g.Log.Info("Initialized empty secrets repository at %s", g.Dir())
 }

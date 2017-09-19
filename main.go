@@ -16,6 +16,12 @@ var (
 func main() {
 	libsecrets.G.Init()
 
+	scopeFlag := cli.StringFlag{
+		Name:  "scope, s",
+		Value: "default",
+		Usage: "Scope to use",
+	}
+
 	app := cli.NewApp()
 	app.Name = "Secrets"
 	app.Usage = "Managing your application secrets"
@@ -36,6 +42,7 @@ func main() {
 				commands.Get(c)
 				return nil
 			},
+			Flags: []cli.Flag{scopeFlag},
 		},
 		{
 			Name:  "set",
@@ -44,6 +51,7 @@ func main() {
 				commands.Set(c)
 				return nil
 			},
+			Flags: []cli.Flag{scopeFlag},
 		},
 		{
 			Name:    "del",
@@ -53,11 +61,13 @@ func main() {
 				commands.Del(c)
 				return nil
 			},
+			Flags: []cli.Flag{scopeFlag},
 		},
 		{
 			Name:  "export",
 			Usage: "Export all data in a scope",
 			Flags: []cli.Flag{
+				scopeFlag,
 				cli.StringFlag{
 					Name:  "format, f",
 					Value: "human",
@@ -73,6 +83,7 @@ func main() {
 			Name:  "import",
 			Usage: "Import data into a scope",
 			Flags: []cli.Flag{
+				scopeFlag,
 				cli.StringFlag{
 					Name:  "format, f",
 					Value: "env",
@@ -100,20 +111,53 @@ func main() {
 						commands.MembersList(c)
 						return nil
 					},
+					Flags: []cli.Flag{scopeFlag},
 				},
 				{
 					Name:  "add",
-					Usage: "Add members",
+					Usage: "Add members to a scope",
 					Action: func(c *cli.Context) error {
 						commands.MembersAdd(c)
+						return nil
+					},
+					Flags: []cli.Flag{scopeFlag},
+				},
+				{
+					Name:  "remove",
+					Usage: "Remove members from a scope",
+					Action: func(c *cli.Context) error {
+						commands.MembersRemove(c)
+						return nil
+					},
+					Flags: []cli.Flag{scopeFlag},
+				},
+			},
+		},
+		{
+			Name:  "scope",
+			Usage: "Scope management",
+			Subcommands: []cli.Command{
+				{
+					Name:  "list",
+					Usage: "List existing scopes",
+					Action: func(c *cli.Context) error {
+						commands.ScopeList(c)
+						return nil
+					},
+				},
+				{
+					Name:  "add",
+					Usage: "Add a new scope",
+					Action: func(c *cli.Context) error {
+						commands.ScopeAdd(c)
 						return nil
 					},
 				},
 				{
 					Name:  "remove",
-					Usage: "Remove members",
+					Usage: "Remove a scope",
 					Action: func(c *cli.Context) error {
-						commands.MembersRemove(c)
+						commands.ScopeRemove(c)
 						return nil
 					},
 				},

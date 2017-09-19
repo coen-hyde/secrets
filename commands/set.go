@@ -11,7 +11,9 @@ import (
 
 // Set sets a value in secrets
 func Set(c *cli.Context) {
-	scope, err := libsecrets.NewScope("default")
+	scopeName := c.String("scope")
+
+	scope, err := libsecrets.GetScope(scopeName)
 	if err != nil {
 		g.LogError(err)
 	}

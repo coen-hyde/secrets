@@ -10,7 +10,8 @@ import (
 
 // Export gets all values from the secrets
 func Export(c *cli.Context) {
-	scope, err := libsecrets.NewScope("default")
+	scopeName := c.String("scope")
+	scope, err := libsecrets.GetScope(scopeName)
 	if err != nil {
 		g.LogError(err)
 	}

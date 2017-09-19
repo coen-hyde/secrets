@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Environment variable export format option
 - Import command supporting json and yaml formats
 - Delete command
+- Scope support
+  - Manage scopes using `secret scope`
+  - Pass a `--scope` to any command to operate on a scope
 
 ### Changed
 - Better error logging

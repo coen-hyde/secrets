@@ -1,15 +1,24 @@
 package commands
 
 import (
+	"fmt"
+
 	cli "github.com/urfave/cli"
 
 	"github.com/bugcrowd/secrets/libsecrets"
 )
 
-// Set sets a value in secrets
+// Del deletes a value from secrets
 func Del(c *cli.Context) {
-	scope, err := libsecrets.NewScope("default")
+	scopeName := c.String("scope")
+	scope, err := libsecrets.GetScope(scopeName)
+
 	if err != nil {
+		g.LogError(err)
+	}
+
+	if len(c.Args()) != 1 {
+		err = fmt.Errorf("The del command requires exactly one argument")
 		g.LogError(err)
 	}
 

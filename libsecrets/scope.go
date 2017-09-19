@@ -17,45 +17,63 @@ type Scope struct {
 	Data    map[string]string
 }
 
+// ImportOptions is a set of options for importing secrets
 type ImportOptions struct {
 	Format string
 	regex  *regexp.Regexp
 }
 
-// NewScope instantiate a scope struct
-func NewScope(name string) (scope *Scope, err error) {
+// NewScope instantiates a Scope struct.
+// If the Scope already exists then creation will fail.
+// In that case use `GetScope`.
+func NewScope(name string) (scope *Scope) {
 	scope = &Scope{
 		Name:    name,
 		Members: make([]Member, 0),
 		Data:    make(map[string]string),
 	}
 
-	// Load existing data if it exists
-	if scope.exists() {
-		err = scope.Load()
-	}
-
 	return
 }
 
-// CreateScope creates a new scope
-func CreateScope(name string) (*Scope, error) {
-	if fileExists(makeScopePath(name)) {
-		return nil, fmt.Errorf("Can not create scope %s. Scope already exists", name)
+// GetScope returns an existing Scope
+func GetScope(name string) (scope *Scope, err error) {
+	scope = NewScope(name)
+	err = scope.Load()
+
+	return scope, err
+}
+
+// CreateScope creates a new Scope and saves it to disk.
+func CreateScope(name string) (scope *Scope, err error) {
+	scope = NewScope(name)
+	if scope.Exists() {
+		return nil, fmt.Errorf("The \"%s\" scope already exists", scope.Name)
 	}
 
-	scope, err := NewScope(name)
+	err = scope.Save()
 	if err != nil {
 		return nil, err
 	}
 
-	// Add the creator of this scope as a member
-	member := NewMemberFromKeybaseUser(G.KeybaseUser)
-	scope.AddMembers([]*Member{member}, member)
+	return scope, nil
+}
 
-	err = scope.Save()
+// RemoveScope deletes an existing scope
+func RemoveScope(name string) (err error) {
+	scope := NewScope(name)
+	path := scope.KeybaseSinkPath()
 
-	return scope, err
+	if !scope.Exists() {
+		return fmt.Errorf("The \"%s\" scope does not exist", name)
+	}
+
+	err = os.Remove(path)
+	if err != nil {
+		return err
+	}
+
+	return
 }
 
 // MakeScopeLocation constructs the path of a scope
@@ -76,21 +94,22 @@ func fileExists(path string) bool {
 	return false
 }
 
-func (s *Scope) exists() bool {
+// Exists returns whether a Scope exists on disk
+func (s *Scope) Exists() bool {
 	return fileExists(s.KeybaseSinkPath())
 }
 
-// Get returns a secret from
+// Get returns a secret from a Scope
 func (s *Scope) Get(key string) string {
 	return s.Data[key]
 }
 
-// Set returns a secret from
+// Set returns a secret from a Scope
 func (s *Scope) Set(key string, value string) {
 	s.Data[key] = value
 }
 
-// Set returns a secret from
+// Del deletes a secret from a Scope
 func (s *Scope) Del(key string) {
 	delete(s.Data, key)
 }
@@ -107,8 +126,8 @@ func (s *Scope) KeybaseSinkPath() string {
 
 // Load reads the secret scope from disk
 func (s *Scope) Load() error {
-	if !s.exists() {
-		return fmt.Errorf("Can not load scope %s from location %s. No such file", s.Name, s.Path())
+	if !s.Exists() {
+		return fmt.Errorf("The \"%s\" scope does not exist", s.Name)
 	}
 
 	src := client.NewFileSource(s.KeybaseSinkPath())
@@ -123,7 +142,7 @@ func (s *Scope) Load() error {
 	return json.Unmarshal(sink.Bytes(), &s)
 }
 
-// AddMembers adds a list of members to the scope
+// AddMembers adds a list of members to the Scope
 func (s *Scope) AddMembers(members []*Member, adder *Member) []*Member {
 	membersAdded := []*Member{}
 
@@ -144,7 +163,7 @@ func (s *Scope) AddMembers(members []*Member, adder *Member) []*Member {
 	return membersAdded
 }
 
-// AddMembers adds a list of members to the scope
+// RemoveMembersByIdentifiers removes members from a Scope
 func (s *Scope) RemoveMembersByIdentifiers(members []string) []*Member {
 	membersKept := []Member{}
 	membersRemoved := []*Member{}
@@ -195,6 +214,13 @@ func (s *Scope) MemberExists(identifier string) bool {
 
 // Save writes the secret scope to disk
 func (s *Scope) Save() error {
+	// If this is a new Scope (not on disk yet), then we need to add the
+	// current keybase user as a member
+	if !s.Exists() {
+		member := NewMemberFromKeybaseUser(G.KeybaseUser)
+		s.AddMembers([]*Member{member}, member)
+	}
+
 	data, err := s.ToJSON()
 	if err != nil {
 		return err
@@ -206,7 +232,7 @@ func (s *Scope) Save() error {
 	return Encrypt(src, sink, GetMemberListIdentifiers(s.MemberPointers()))
 }
 
-// Export returns this scopes data in the request format
+// Export returns this Scope's data in the requested format
 func (s *Scope) Export(format string) (string, error) {
 	var formatter Formatter
 
@@ -226,6 +252,7 @@ func (s *Scope) Export(format string) (string, error) {
 	return formatter.String(), nil
 }
 
+// Import adds `contents` to the Scope with the given options
 func (s *Scope) Import(contents string, options ImportOptions) error {
 	var parser Importer
 

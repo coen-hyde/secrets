@@ -43,7 +43,8 @@ func loadMembersFromArgs(c *cli.Context) ([]*libsecrets.Member, error) {
 
 // MembersList gets all or a specific value from the secrets
 func MembersList(c *cli.Context) {
-	scope, err := libsecrets.NewScope("default")
+	scopeName := c.String("scope")
+	scope, err := libsecrets.GetScope(scopeName)
 	if err != nil {
 		g.LogError(err)
 	}
@@ -55,7 +56,8 @@ func MembersList(c *cli.Context) {
 
 // MembersAdd add a new member to the scope
 func MembersAdd(c *cli.Context) {
-	scope, err := libsecrets.NewScope("default")
+	scopeName := c.String("scope")
+	scope, err := libsecrets.GetScope(scopeName)
 	if err != nil {
 		g.LogError(err)
 	}
@@ -78,12 +80,17 @@ func MembersAdd(c *cli.Context) {
 		return
 	}
 
-	g.Log.Notice("Added members %s", strings.Join(libsecrets.GetMemberListIdentifiers(membersAdded), ", "))
+	g.Log.Notice(
+		"Added members %s to scope \"%s\"",
+		strings.Join(libsecrets.GetMemberListIdentifiers(membersAdded), ", "),
+		scope.Name,
+	)
 }
 
 // MembersRemove add a new member to the scope
 func MembersRemove(c *cli.Context) {
-	scope, err := libsecrets.NewScope("default")
+	scopeName := c.String("scope")
+	scope, err := libsecrets.GetScope(scopeName)
 	if err != nil {
 		g.LogError(err)
 	}
@@ -95,5 +102,9 @@ func MembersRemove(c *cli.Context) {
 		g.LogError(err)
 	}
 
-	g.Log.Notice("Removed members %s", strings.Join(libsecrets.GetMemberListIdentifiers(membersRemoved), ", "))
+	g.Log.Notice(
+		"Removed members %s from scope \"%s\"",
+		strings.Join(libsecrets.GetMemberListIdentifiers(membersRemoved), ", "),
+		scope.Name,
+	)
 }
