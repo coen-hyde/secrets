@@ -1,11 +1,11 @@
-hash: fb829c3ae697cefe2093095ded10a579ed983a23bee791f3c8d700e681b79381
-updated: 2017-03-15T23:47:46.862741546-07:00
+hash: 03da614edd0e613f267c567f8d98e09f77b57b92dd7e46aa798a69e53498a2e3
+updated: 2017-09-18T17:42:22.898420817-07:00
 imports:
 - name: bazil.org/fuse
   version: 371fbbdaa8987b715bdd21d6adc4c9b20155f748
 - name: code.google.com/p/rsc
   version: e1cb635eaa1bed9efc1ec21c8537c46161abfcb8
-  repo: git@github.com:rsc/rsc.git
+  repo: https://github.com/rsc/rsc.git
   vcs: git
   subpackages:
   - gf256
@@ -198,6 +198,6 @@ imports:
   version: fa8c79229fbda5e9996dd91341b9fc023aa5d33a
 - name: stathat.com/c/ramcache
   version: d229745ea466bc903d6cdf310aa57bfffb45653b
-  repo: git@github.com:stathat/ramcache.git
+  repo: https://github.com/stathat/ramcache.git
   vcs: git
 testImports: []

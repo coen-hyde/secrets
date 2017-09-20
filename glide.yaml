@@ -2,10 +2,10 @@ package: github.com/bugcrowd/secrets
 import:
 - package: stathat.com/c/ramcache
   vcs: git
-  repo: git@github.com:stathat/ramcache.git
+  repo: https://github.com/stathat/ramcache.git
 - package: code.google.com/p/rsc
   vcs: git
-  repo: git@github.com:rsc/rsc.git
+  repo: https://github.com/rsc/rsc.git
 - package: github.com/urfave/cli
   verions: ^1.19.0
 - package: github.com/keybase/client
