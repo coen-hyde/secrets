@@ -1,8 +1,16 @@
-hash: 03da614edd0e613f267c567f8d98e09f77b57b92dd7e46aa798a69e53498a2e3
-updated: 2017-09-18T17:42:22.898420817-07:00
+hash: c52c84284262ecb6997c46751f971a4570d9b5ece3ab4016729606c9c4fa5598
+updated: 2018-01-19T16:41:19.74785-08:00
 imports:
 - name: bazil.org/fuse
   version: 371fbbdaa8987b715bdd21d6adc4c9b20155f748
+- name: camlistore.org
+  version: c55c8602d3cea4511081630e17bca7ed601abc44
+  repo: https://github.com/perkeep/perkeep.git
+  subpackages:
+  - pkg/buildinfo
+  - pkg/images
+  - pkg/images/fastjpeg
+  - pkg/images/resize
 - name: code.google.com/p/rsc
   version: e1cb635eaa1bed9efc1ec21c8537c46161abfcb8
   repo: https://github.com/rsc/rsc.git
@@ -11,57 +19,73 @@ imports:
   - gf256
   - qr
   - qr/coding
-- name: github.com/agl/ed25519
-  version: 278e1ec8e8a6e017cd07577924d6766039146ced
-  subpackages:
-  - edwards25519
 - name: github.com/andybalholm/cascadia
   version: 65919c611220063037b1db8eb334acaf17a6d8ea
 - name: github.com/blang/semver
   version: 60ec3488bfea7cca02b021d106d9911120d25fe9
-- name: github.com/cenkalti/backoff
-  version: b02f2bbce11d7ea6b97f282ef1771b0fe2f65ef3
+- name: github.com/coreos/go-systemd
+  version: cc4f39464dc797b91c8025330de585294c2a6950
+  subpackages:
+  - activation
+  - daemon
+  - util
+- name: github.com/coreos/pkg
+  version: 97fdf19511ea361ae1c100dd393cc47f8dcfa1e1
+  subpackages:
+  - dlopen
+- name: github.com/davecgh/go-spew
+  version: ecdeabc65495df2dec95d7c4a4c3e021903035e5
+  subpackages:
+  - spew
 - name: github.com/dustin/go-humanize
   version: bd88f87ad3a420f7bcf05e90566fd1ceb351fa7f
-- name: github.com/golang/groupcache
-  version: a6b377e3400b08991b80d6805d627f347f983866
-  subpackages:
-  - singleflight
 - name: github.com/golang/snappy
   version: d9eb7a3d35ec988b8585d4a0068e462c27d28380
 - name: github.com/hashicorp/golang-lru
   version: 0a025b7e63adc15a622f29b0b2c4c3848243bbf6
   subpackages:
   - simplelru
-- name: github.com/jonboulle/clockwork
-  version: bcac9884e7502bb2b474c0339d889cb981a2f27f
 - name: github.com/kardianos/osext
   version: c2c54e542fb797ad986b31721e1baedf214ca413
+- name: github.com/keybase/backoff
+  version: 726b63b835ec48ae1fac42bcba4e8c7b742fa97d
 - name: github.com/keybase/cli
   version: a13fd3546410f473e9e479b9db1413bb679fdce9
 - name: github.com/keybase/client
-  version: 164f4a483d1607f8ac9f305cdf185645d1f739ab
+  version: f542cada4f4c47f10ed155afc9266bab537f7be1
   subpackages:
   - go/auth
+  - go/badges
   - go/chat
+  - go/chat/globals
+  - go/chat/msgchecker
   - go/chat/pager
   - go/chat/s3
   - go/chat/signencrypt
   - go/chat/storage
+  - go/chat/types
   - go/chat/utils
   - go/client
+  - go/encrypteddb
   - go/engine
   - go/externals
   - go/flexibletable
+  - go/git
   - go/gregor
   - go/gregor/client
   - go/gregor/storage
+  - go/home
   - go/install
+  - go/install/libnativeinstaller
+  - go/kbfs
+  - go/kbnm/hostmanifest
+  - go/kbnm/installer
   - go/kex2
   - go/launchd
   - go/libcmdline
   - go/libkb
   - go/logger
+  - go/lru
   - go/lsof
   - go/minterm
   - go/mounter
@@ -71,21 +95,32 @@ imports:
   - go/protocol/gregor1
   - go/protocol/keybase1
   - go/pvl
+  - go/pvlsource
   - go/qrcode
   - go/service
   - go/spotty
+  - go/systemd
+  - go/teams
+  - go/uidmap
+- name: github.com/keybase/clockwork
+  version: 976f45f4a979cd2fd048a639630ba20d8378c9d8
 - name: github.com/keybase/go-codec
   version: cc2681ec6f901149e58af9d40a90da1aa370aadb
   subpackages:
   - codec
 - name: github.com/keybase/go-crypto
-  version: 3a7c7436ed7694957a3ced08902b0b93802c88da
+  version: 2d22b6e67049389f2b93ab4bcb4e2694f844db62
+  repo: https://github.com/keybase/go-crypto.git
   subpackages:
   - brainpool
   - cast5
+  - curve25519
+  - ed25519
+  - ed25519/internal/edwards25519
   - openpgp
   - openpgp/armor
   - openpgp/clearsign
+  - openpgp/ecdh
   - openpgp/elgamal
   - openpgp/errors
   - openpgp/packet
@@ -93,9 +128,10 @@ imports:
   - rsa
   - ssh/terminal
 - name: github.com/keybase/go-framed-msgpack-rpc
-  version: f08dee4c9e838e5a6c499ad4ed2e9a4ab6433361
+  version: c416da7cf9cfb85545098e346be6583a1649b0d5
   subpackages:
   - rpc
+  - rpc/resinit
 - name: github.com/keybase/go-jsonw
   version: b3050ccb78db8e2bd81378cd9b06554c5631bfbf
 - name: github.com/keybase/go-kext
@@ -120,19 +156,30 @@ imports:
 - name: github.com/keybase/npipe
   version: 1f399aeffbab7364397986a1b531b6f02b15cd3e
 - name: github.com/keybase/saltpack
-  version: 3db6dd125efa5c88d7d6fd67a5c4a39caefdcabc
+  version: a64888f73967e479064b4a80cc65ae4c3829ab07
+  repo: https://github.com/keybase/saltpack.git
   subpackages:
   - encoding/basex
 - name: github.com/kr/text
   version: 7cafcd837844e784b526369c9bce262804aebc60
 - name: github.com/mattn/go-isatty
   version: 66b8e73f3f5cda9f96b69efd03dd3d7fc4a5cdb8
+- name: github.com/miekg/dns
+  version: c862b7e359850847d4945cce311db2ea90cab7c0
+  repo: https://github.com/miekg/dns.git
+- name: github.com/nf/cr2
+  version: 05d46fef4f2f903240751e25871cd318d001deba
+- name: github.com/nfnt/resize
+  version: 891127d8d1b52734debe1b3c3d7e747502b6c366
+- name: github.com/pkg/errors
+  version: e881fd58d78e04cf6d0de1217f8707c8cc2249bc
 - name: github.com/PuerkitoBio/goquery
   version: 152b1a2c8f5d0340f658bb656032a39b94e52958
-- name: github.com/rogpeppe/rog-go
-  version: f57ad5e24ab7813942c045f86eda1066eb969e98
+- name: github.com/rwcarlsen/goexif
+  version: 17202558c8d9c3fd047859f1a5e73fd9ae709187
   subpackages:
-  - reverse
+  - exif
+  - tiff
 - name: github.com/satori/go.uuid
   version: b061729afc07e77a8aa4fad0a2fd840958f1942a
 - name: github.com/syndtr/goleveldb
@@ -152,10 +199,16 @@ imports:
   - leveldb/util
 - name: github.com/urfave/cli
   version: 2526b57c56f30b50466c96c4133b1a4ad0f0191f
+- name: go4.org
+  version: fba789b7e39ba524b9e60c45c37a50fae63a2a09
+  subpackages:
+  - readerutil
 - name: golang.org/x/crypto
   version: 9477e0b78b9ac3d0b03822fd95422e2fe07627cd
   subpackages:
   - curve25519
+  - ed25519
+  - ed25519/internal/edwards25519
   - nacl/box
   - nacl/secretbox
   - pbkdf2
@@ -166,10 +219,18 @@ imports:
   - scrypt
   - ssh/terminal
   - twofish
+- name: golang.org/x/image
+  version: 12117c17ca67ffa1ce22e9409f3b0b0a93ac08c7
+  subpackages:
+  - draw
+  - math/f64
+  - tiff
+  - tiff/lzw
 - name: golang.org/x/net
   version: 4971afdc2f162e82d185353533d3cf16188a9f4e
   subpackages:
   - context
+  - context/ctxhttp
   - html
   - html/atom
 - name: golang.org/x/sync
@@ -198,6 +259,4 @@ imports:
   version: fa8c79229fbda5e9996dd91341b9fc023aa5d33a
 - name: stathat.com/c/ramcache
   version: d229745ea466bc903d6cdf310aa57bfffb45653b
-  repo: https://github.com/stathat/ramcache.git
-  vcs: git
 testImports: []
