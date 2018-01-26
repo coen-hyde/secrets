@@ -1,4 +1,6 @@
+.DS_Store
 .secrets
 secrets*
-vendor
 .vscode
+vendor/*
+!vendor/code.google.com/
