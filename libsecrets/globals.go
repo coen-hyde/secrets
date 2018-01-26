@@ -17,8 +17,9 @@ var libkbOnce sync.Once
 
 // GlobalContext stores the application global context
 type GlobalContext struct {
-	Log         logger.Logger
-	KeybaseUser *keybase1.User
+	Log            logger.Logger
+	KeybaseContext *libkb.GlobalContext
+	KeybaseUser    *keybase1.User
 }
 
 // NewGlobalContext initializes a new global context
@@ -57,15 +58,18 @@ func (g *GlobalContext) Init() {
 }
 
 func (g *GlobalContext) initLibkb() {
+	g.KeybaseContext = libkb.NewGlobalContext()
+	g.KeybaseContext.Init()
+
 	libkbOnce.Do(func() {
-		libkb.G.Init()
-		libkb.G.ConfigureConfig()
-		libkb.G.ConfigureLogging()
-		libkb.G.ConfigureCaches()
-		libkb.G.ConfigureMerkleClient()
-		libkb.G.ConfigureKeyring()
-		libkb.G.ConfigureExportedStreams()
-		libkb.G.ConfigureSocketInfo()
+		g.KeybaseContext.Init()
+		g.KeybaseContext.ConfigureConfig()
+		g.KeybaseContext.ConfigureLogging()
+		g.KeybaseContext.ConfigureCaches()
+		g.KeybaseContext.ConfigureMerkleClient()
+		g.KeybaseContext.ConfigureKeyring()
+		g.KeybaseContext.ConfigureExportedStreams()
+		g.KeybaseContext.ConfigureSocketInfo()
 	})
 }
 
@@ -82,7 +86,7 @@ func (g *GlobalContext) LogError(err error) {
 
 // CurrentUser Get the current Keybase User
 func (g *GlobalContext) CurrentUser() (*keybase1.User, error) {
-	configCli, err := client.GetConfigClient(libkb.G)
+	configCli, err := client.GetConfigClient(g.KeybaseContext)
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +102,7 @@ func (g *GlobalContext) CurrentUser() (*keybase1.User, error) {
 
 	myUID := currentStatus.User.Uid
 
-	userCli, err := client.GetUserClient(libkb.G)
+	userCli, err := client.GetUserClient(g.KeybaseContext)
 	if err != nil {
 		return nil, err
 	}

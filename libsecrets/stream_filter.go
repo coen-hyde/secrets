@@ -43,7 +43,7 @@ func (s *StreamFilter) ClientOpen() (snk, src keybase1.Stream, err error) {
 		return
 	}
 
-	snk = libkb.G.XStreams.ExportWriter(s.sink)
-	src = libkb.G.XStreams.ExportReader(s.source)
+	snk = G.KeybaseContext.XStreams.ExportWriter(s.sink)
+	src = G.KeybaseContext.XStreams.ExportReader(s.source)
 	return
 }

@@ -7,33 +7,33 @@ import (
 	"golang.org/x/net/context"
 
 	"github.com/keybase/client/go/client"
-	"github.com/keybase/client/go/libkb"
+	libkb "github.com/keybase/client/go/libkb"
 	"github.com/keybase/client/go/protocol/keybase1"
 	"github.com/keybase/go-framed-msgpack-rpc/rpc"
 )
 
 // Decrypt decrypts data from the source stream to the sink stream
 func Decrypt(source client.Source, sink client.Sink, interactive bool, force bool) error {
-	cli, err := client.GetSaltpackClient(libkb.G)
+	cli, err := client.GetSaltpackClient(G.KeybaseContext)
 	if err != nil {
 		return err
 	}
 
 	// Setup SaltpackUI for user interaction
 	spui := &SaltpackUI{
-		Contextified: libkb.NewContextified(libkb.G),
-		terminal:     libkb.G.UI.GetTerminalUI(),
+		Contextified: libkb.NewContextified(G.KeybaseContext),
+		terminal:     G.KeybaseContext.UI.GetTerminalUI(),
 		interactive:  interactive,
 		force:        force,
 	}
 
 	protocols := []rpc.Protocol{
-		client.NewStreamUIProtocol(libkb.G),
-		client.NewSecretUIProtocol(libkb.G),
-		client.NewIdentifyUIProtocol(libkb.G),
+		client.NewStreamUIProtocol(G.KeybaseContext),
+		client.NewSecretUIProtocol(G.KeybaseContext),
+		client.NewIdentifyUIProtocol(G.KeybaseContext),
 		keybase1.SaltpackUiProtocol(spui),
 	}
-	if err = client.RegisterProtocolsWithContext(protocols, libkb.G); err != nil {
+	if err = client.RegisterProtocolsWithContext(protocols, G.KeybaseContext); err != nil {
 		return err
 	}
 
@@ -71,7 +71,7 @@ func explainDecryptionFailure(info *keybase1.SaltpackEncryptedMessageInfo) {
 	if info == nil {
 		return
 	}
-	out := libkb.G.UI.GetTerminalUI().ErrorWriter()
+	out := G.KeybaseContext.UI.GetTerminalUI().ErrorWriter()
 	prnt := func(s string, args ...interface{}) {
 		fmt.Fprintf(out, s, args...)
 	}

@@ -12,17 +12,17 @@ import (
 // Encrypt encrypts data from the source stream to the sink stream for the
 // list of provided members
 func Encrypt(source client.Source, sink client.Sink, members []string) error {
-	cli, err := client.GetSaltpackClient(libkb.G)
+	cli, err := client.GetSaltpackClient(G.KeybaseContext)
 	if err != nil {
 		return err
 	}
 
 	protocols := []rpc.Protocol{
-		client.NewStreamUIProtocol(libkb.G),
-		client.NewSecretUIProtocol(libkb.G),
-		client.NewIdentifyUIProtocol(libkb.G),
+		client.NewStreamUIProtocol(G.KeybaseContext),
+		client.NewSecretUIProtocol(G.KeybaseContext),
+		client.NewIdentifyUIProtocol(G.KeybaseContext),
 	}
-	if err = client.RegisterProtocolsWithContext(protocols, libkb.G); err != nil {
+	if err = client.RegisterProtocolsWithContext(protocols, G.KeybaseContext); err != nil {
 		return err
 	}
 
