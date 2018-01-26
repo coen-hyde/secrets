@@ -1,0 +1,9 @@
+ignored = ["code.google.com/p/rsc*"]
+
+[[constraint]]
+  name = "github.com/keybase/client"
+  version = "=1.0.40"
+
+[[constraint]]
+  name = "github.com/urfave/cli"
+  version = "^1.19.0"
